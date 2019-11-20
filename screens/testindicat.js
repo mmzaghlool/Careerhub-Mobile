@@ -1,5 +1,7 @@
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import EnterToTest from './entertotest';
+
 
 import {
     StyleSheet,
@@ -11,7 +13,7 @@ import {
     AsyncStorage
 } from 'react-native';
 
-export default class IndicatorForTest extends React.Component {
+export default class TestIndicat extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,14 +53,7 @@ export default class IndicatorForTest extends React.Component {
         switch (this.state.display) {
             case 'entertotest':
                 return <EnterToTest />
-            case 'One':
-                return <One />
-            case 'Two':
-                return <Two />
-            case 'Three':
-                return <Three />
-            case 'Four':
-                return <Four />
+
         }
     }
 
@@ -79,11 +74,10 @@ export default class IndicatorForTest extends React.Component {
                 <LinearGradient
                     colors={['#5653e2', '#795EE3', '#ae71f2']}
                     style={styles.linearGradient}>
-
-                    <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 27, marginTop: 15, color: 'white', marginTop: 20 }}> PERSONALITY TEST </Text>
-
-                    <View style={styles.dynamicScreen}> {this.renderPage()}  </View>
-
+                    <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 27, marginTop: 15, color: 'white', marginTop: 20 }}>PERSONALITY TEST</Text>
+                    <View style={styles.dynamicScreen}>
+                        {this.renderPage()}
+                    </View>
                     <TouchableOpacity style={{ borderRadius: 30, marginTop: 9, width: '70%', marginLeft: 52, flexDirection: 'column' }}
                         onPress={() => { this.registerPressed() }}>
                         <LinearGradient
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
     dynamicScreen: {
         backgroundColor: 'white',
         marginTop: 10,
-        height: height * .77,
+        height: '87%',
         borderRadius: 18
 
     },

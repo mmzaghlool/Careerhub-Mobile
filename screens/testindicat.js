@@ -1,7 +1,7 @@
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import EnterToTest from './entertotest';
-
+import Qes from './qes'
 
 import {
     StyleSheet,
@@ -34,7 +34,7 @@ export default class TestIndicat extends React.Component {
     handleBackPress = () => {
         if (this.state.display === 'entertotest') {
             BackHandler.exitApp()
-        } else if (this.state.display === 'One') {
+        } else if (this.state.display === 'Qes') {
             this.setState({ display: 'entertotest' })
         }
         else if (this.state.display === 'Two') {
@@ -53,6 +53,8 @@ export default class TestIndicat extends React.Component {
         switch (this.state.display) {
             case 'entertotest':
                 return <EnterToTest />
+            case 'Qes':
+                return <Qes />
 
         }
     }
@@ -61,7 +63,7 @@ export default class TestIndicat extends React.Component {
 
     registerPressed = () => {
         if (this.state.display === 'entertotest') {
-            this.setState({ display: 'One' })
+            this.setState({ display: 'Qes' })
         } else if (this.state.display === 'One') {
             this.setState({ display: 'Two' })
         }
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     dynamicScreen: {
         backgroundColor: 'white',
         marginTop: 10,
-        height: '87%',
+        height: '80%',
         borderRadius: 18
 
     },

@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-    StyleSheet,
-    ScrollView,
     View,
     Text,
     Image,
@@ -19,7 +17,7 @@ import {
     render() {
       return (
         <View style={{ }}>
-          <View style={{padding:0 , marginTop:38 , flexDirection:'column',flex:1 }}>
+          <View style={{padding:0 , marginTop:38 , flexDirection:'column'}}>
                   <Text style={{textAlign:'center', fontWeight: 'bold',fontSize:20}}>We can suggest a tips and a suitable</Text>
                   <Text style={{textAlign:'center', fontWeight: 'bold',fontSize:20}}>career for you based on some</Text>
                   <Text style={{textAlign:'center', fontWeight: 'bold',fontSize:20}}>questions which you are going to</Text>

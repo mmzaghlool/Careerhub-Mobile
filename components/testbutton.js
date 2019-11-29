@@ -28,10 +28,8 @@ export default class TestButton extends React.Component {
     return (
       <TouchableOpacity style={{ width: 120, borderRadius: 25, borderWidth: 2.5, borderColor: '#ae71f2', backgroundColor: answer === answerType ? "#ae71f2" : 'white' }}
         onPress={() => {
-          this.props.onSelected(answerType)
           this.setState({ answer: answerType })
-          
-         
+          this.props.onSelected(this.state.answer,this.props.index)
         }}>
         <Text style={{ paddingVertical: 3, paddingHorizontal: 3, textAlign: 'center', fontSize: 20, color: 'black' }}>
           {answerType}

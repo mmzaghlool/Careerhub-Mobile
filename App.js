@@ -2,12 +2,12 @@ import {createAppContainer } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack';
 import TestIndicat from './screens/testindicat'
 import Qes from './screens/qes';
-import FirstScreen from './FirstScreen';
-import Login from './Registration/Login/Login';
-import ForgetPassword1 from './Registration/Login/ForgetPassword1';
-import ForgetPassword2 from './Registration/Login/ForgetPassword2';
-import ForgetPassword3 from './Registration/Login/ForgetPassword3'; 
-import Indicator from './Registration/Signup/Indicator';
+import FirstScreen from './screens/FirstScreen';
+import Login from './screens/Registration/Login/Login';
+import ForgetPassword1 from './screens/Registration/Login/ForgetPassword1';
+import ForgetPassword2 from './screens/Registration/Login/ForgetPassword2';
+import ForgetPassword3 from './screens/Registration/Login/ForgetPassword3'; 
+import Indicator from './screens/Registration/Signup/Indicator';
 
 const AppNavigator = createStackNavigator({
 

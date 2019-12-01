@@ -50,31 +50,7 @@ export default class Login extends Component {
         .catch(this.onLoginFail.bind(this))
     }
 
-    // console.log('err', email, password);
-    // console.log('err', firebase);
-
-    // const x = firebase.auth().currentUser;
-    // console.log("x", x);
-
-    // firebase.auth().signOut()
-
-    //   firebase.auth().signInWithEmailAndPassword(email, password)
-    //     .then(async res => {
-    //       console.log('res', res);
-
-    //       await fetch(`${API_LINK}/users/getUser/${res.user.uid}`)
-    //         .then(ress => ress.json())
-    //         .then(log => {
-    //           console.log('log22', log);
-
-    //         })
-
-    //       // this.props.navigation.navigate('Profile')
-    //     })
-    //     .catch(err => {
-    //       console.log('err', err);
-    //     })
-    // }}
+   
 
   }
 
@@ -82,7 +58,6 @@ export default class Login extends Component {
     this.setState({
       loading: false,
     })
-    // onPress={() => AsyncStorage.setItem('Login', 1)}
     this.props.navigation.navigate('Profile')
   }
 
@@ -162,34 +137,7 @@ export default class Login extends Component {
             <View style={{ marginTop: height * 0.05 }}>
               <TouchableOpacity
                 onPress={this.onButtonPress.bind(this)}
-              // onPress={() => {
-              //   // this.props.navigation.navigate('Profile')
-              //   const { email, password } = this.state;
-              //   console.log('err', email, password);
-              //   console.log('err', firebase);
-
-              //   // const x = firebase.auth().currentUser;
-              //   // console.log("x", x);
-
-              //   // firebase.auth().signOut()
-
-              //   //   firebase.auth().signInWithEmailAndPassword(email, password)
-              //   //     .then(async res => {
-              //   //       console.log('res', res);
-
-              //   //       await fetch(`${API_LINK}/users/getUser/${res.user.uid}`)
-              //   //         .then(ress => ress.json())
-              //   //         .then(log => {
-              //   //           console.log('log22', log);
-
-              //   //         })
-
-              //   //       // this.props.navigation.navigate('Profile')
-              //   //     })
-              //   //     .catch(err => {
-              //   //       console.log('err', err);
-              //   //     })
-              //   // }}
+            
               >
                 <LinearGradient
                   start={{ x: 0, y: 0 }}

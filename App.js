@@ -8,6 +8,7 @@ import ForgetPassword1 from './screens/Registration/Login/ForgetPassword1';
 import ForgetPassword2 from './screens/Registration/Login/ForgetPassword2';
 import ForgetPassword3 from './screens/Registration/Login/ForgetPassword3'; 
 import Indicator from './screens/Registration/Signup/Indicator';
+import Profile from './screens/Profile/Profile'
 
 const AppNavigator = createStackNavigator({
 
@@ -35,6 +36,9 @@ ForgetPassword3:{
 }, 
 Indicator:{
     screen: Indicator
+},
+Profile:{
+  screen: Profile
 },
 
 }, {

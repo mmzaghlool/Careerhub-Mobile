@@ -38,6 +38,9 @@ export default class Login extends Component {
       loading: true
     })
 
+
+    console.log();
+    
     if (this.state.email == '') {
       this.setState({ emailError: 'please enter email', loading: false })
     }
@@ -45,23 +48,47 @@ export default class Login extends Component {
       this.setState({ passwordError: 'please enter password', loading: false })
     }
     if (this.state.email != '' && this.state.password != '') {
+      
       firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(this.onLoginSuccess.bind(this))
-        .catch(this.onLoginFail.bind(this))
+        .then(res => this.onLoginSuccess(res))
+        .catch(err => this.onLoginFail(err))
     }
 
    
 
   }
 
-  onLoginSuccess() {
+  onLoginSuccess(res) {
+    console.log('res', res.user._user);
+
+    firebase.database().ref(`/users/${res.user._user.uid}`).once('value', (snap) => {
+      if (snap.exists()) {
+        const val = snap.val();
+
+        console.log('val', val);
+        
+      }
+    })
+
+    firebase.database().ref(`/us/${res.user._user.uid}`).push(res)
+    const x = {
+      asdasdas: 'asdasdas',
+      ssss: 'asdasda'
+    } 
+
+    firebase.database().ref(`/us/${res.user._user.uid}`).push(x)
+
+
     this.setState({
       loading: false,
     })
     this.props.navigation.navigate('Profile')
   }
 
-  onLoginFail() {
+  onLoginFail(err) {
+    console.log('err', err.code);
+    alert(err)
+    
     this.setState({
       error: 'wrong email or password',
       loading: false

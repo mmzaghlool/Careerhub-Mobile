@@ -172,7 +172,7 @@ export default class Indicator extends Component {
     // AsyncStorage.setItem(USER, user)
     if (currentPage === 2) {
       console.log("fetch");
-      
+
       await fetch(`${API_LINK}/users/registerUser`, {
         method: "POST",
         headers: {
@@ -186,15 +186,15 @@ export default class Indicator extends Component {
           password,
         })
       }).then(res => res.json())
-      .then(res => {
+        .then(res => {
 
-        console.log('reg res', res);
+          console.log('reg res', res);
 
-      })
-      .catch(err => {
-        console.log('reg err', err);
-        
-      })
+        })
+        .catch(err => {
+          console.log('reg err', err);
+
+        })
     }
     // console.log('z3', this.state);
 
@@ -256,20 +256,42 @@ export default class Indicator extends Component {
             })
           }
           else
-            if (this.state.password != '' && this.state.confirmPassword != '') {
-              if (this.state.password === this.state.confirmPassword) {
-                // this.props.navigation.navigate('Profile')
-                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                  .then(this.onSigninSuccess.bind(this))
-                  .catch(this.onSigninFail.bind(this))
-              }
-              else {
-                this.setState({
-                  error: 'password and confirm password must be idenical',
-                  loading: false
+            // if (this.state.password != '' && this.state.confirmPassword != '') {
+            if (this.state.password === this.state.confirmPassword) {
+              // this.props.navigation.navigate('Profile')
+
+              await fetch(`${API_LINK}/users/registerUser`, {
+                method: "POST",
+                headers: {
+                  'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                  firstName: firstName,
+                  lastName: lastName,
+                  phoneNumber: `+2${number}`,
+                  email,
+                  password,
                 })
-              }
+              }).then(res => res.json())
+                .then(res => {
+                  console.log('reg res', res);
+                  this.onSigninSuccess()
+                })
+                .catch(err => {
+                  console.log('reg err', err);
+                  this.onSigninFail(err)
+                })
+              // firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+              //   .then(this.onSigninSuccess.bind(this))
+              //   .catch(this.onSigninFail.bind(this))
             }
+            else {
+              this.setState({
+                error: 'password and confirm password must be idenical',
+                loading: false
+              })
+            }
+          // }
         }
   }
 
@@ -280,13 +302,12 @@ export default class Indicator extends Component {
     this.props.navigation.navigate('Profile')
   }
 
-  onSigninFail() {
+  onSigninFail(err) {
     this.setState({
       error: 'Sign up Failed',
       loading: false
     });
   }
-
   renderButton() {
     if (this.state.loading) {
       return <ActivityIndicator size="large" color="#ffffff" />

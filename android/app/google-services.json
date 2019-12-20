@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "204318189072",
+    "firebase_url": "https://aiet-bae93.firebaseio.com",
+    "project_id": "aiet-bae93",
+    "storage_bucket": "aiet-bae93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204318189072:android:9eb7c4e16a559a48abcc95",
+        "android_client_info": {
+          "package_name": "com.career_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204318189072-9bljufu99f1lkpsu9cu679k3v3v0uhoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgRBmGFyoF-d1gwbpsQ9TnCIoW3oqP9G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204318189072-9bljufu99f1lkpsu9cu679k3v3v0uhoa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204318189072-offd1l45aos9lktko4kmv16fitog331i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tutorial"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204318189072:android:5d398e6213df7d2eabcc95",
+        "android_client_info": {
+          "package_name": "com.finalproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204318189072-9bljufu99f1lkpsu9cu679k3v3v0uhoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgRBmGFyoF-d1gwbpsQ9TnCIoW3oqP9G8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204318189072-9bljufu99f1lkpsu9cu679k3v3v0uhoa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204318189072-offd1l45aos9lktko4kmv16fitog331i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tutorial"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

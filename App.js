@@ -8,16 +8,19 @@ import ForgetPassword1 from './screens/Registration/Login/ForgetPassword1';
 import ForgetPassword2 from './screens/Registration/Login/ForgetPassword2';
 import ForgetPassword3 from './screens/Registration/Login/ForgetPassword3'; 
 import Indicator from './screens/Registration/Signup/Indicator';
+import Drawer from './components/drawer'
 
 const AppNavigator = createStackNavigator({
 
-  FirstScreen:{
-    screen:FirstScreen
+  Drawer:{
+    screen:Drawer
   },
-
   TestIndicat:{
     screen:TestIndicat
   },
+  FirstScreen:{
+    screen:FirstScreen
+  },  
   Qes:{
     screen:Qes
   },

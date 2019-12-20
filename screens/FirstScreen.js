@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 // import AsyncStorage from '@react-native-community/async-storage';
+import firebase from 'react-native-firebase';
 
 const { height, width } = Dimensions.get('window')
 
@@ -40,7 +41,12 @@ export default class FirstScreen extends Component {
             <Text style={styles.text}>How do you want {"\n"} to continue</Text>
             <View style={{ paddingTop: height * 0.01, paddingHorizontal: width * 0.01 }}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Login')}>
+                onPress={() => {
+                  this.props.navigation.navigate('Login')
+                  const user =firebase.auth().currentUser;
+                  console.log('user', user);
+                   
+                }}>
                 <LinearGradient
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}

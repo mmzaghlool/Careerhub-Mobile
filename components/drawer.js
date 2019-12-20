@@ -6,20 +6,18 @@
 
 import TestIndicator from '../screens/testindicat';
 import Qes from '../screens/qes'
-import Login from './login'
+import FirstScreen from '../screens/FirstScreen';
+
 import * as React from 'react';
 import { Text, View, Image, ScrollView, StyleSheet, Button, TouchableOpacity, Dimensions, Icon } from 'react-native';
 import {
-  createDrawerNavigator,
   createAppContainer,
   createStackNavigator,
-  DrawerItems,
   SafeAreaView,
   DrawerNavigator
 } from 'react-navigation';
-
+import { createDrawerNavigator , DrawerItems} from 'react-navigation-drawer';
 const { height, width } = Dimensions.get('window')
-import NavigationDrawerLayout from 'react-native-navigation-drawer-layout';
 
 
 
@@ -79,9 +77,9 @@ const MyDrawerNavigator = createDrawerNavigator({
 
     },
   },
-  Header:
+  FirstScreen:
   {
-    screen: Header,
+    screen: FirstScreen,
     navigationOptions: {
       title: 'Messenger',
       drawerIcon: <Image
@@ -91,7 +89,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   },
   groups:
   {
-    screen: Header,
+    screen: TestIndicator,
     navigationOptions: {
       title: 'Groups And Communities',
       drawerIcon: <Image
@@ -101,7 +99,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   },
   logout:
   {
-    screen: Header,
+    screen: TestIndicator,
     navigationOptions: {
       title: 'Log Out',
       drawerIcon: <Image

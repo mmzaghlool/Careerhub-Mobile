@@ -7,6 +7,7 @@ import {
     Dimensions
   } from 'react-native';
   import TestButton from '../components/testbutton';
+import firebase from 'react-native-firebase';
 
 
   
@@ -36,7 +37,11 @@ import {
     }
   
     componentDidMount() {
-      fetch(`${API}/users/getQuestions`)
+      // fetch(`${API}/users/getQuestions`)
+      firebase.database().ref('/questions').once('value', snap => {
+        const data = snap.val();
+        this.setState({ data })
+      })
 
     }
 

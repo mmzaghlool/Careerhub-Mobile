@@ -12,16 +12,16 @@ import Drawer from './components/drawer'
 import Profile from './screens/Profile/Profile'
 
 const AppNavigator = createStackNavigator({
-
+  FirstScreen:{
+    screen:FirstScreen
+  },  
   Drawer:{
     screen:Drawer
   },
   TestIndicat:{
     screen:TestIndicat
   },
-  FirstScreen:{
-    screen:FirstScreen
-  },  
+  
   Qes:{
     screen:Qes
   },

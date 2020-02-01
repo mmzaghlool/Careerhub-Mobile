@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 
 import com.android.build.OutputFile
 
@@ -183,7 +185,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     
   implementation project(':react-native-firebase')    
-    
+    implementation project(':react-native-vector-icons')
     // Firebase dependencies
     implementation "com.google.android.gms:play-services-base:16.1.0"
     implementation "com.google.firebase:firebase-core:16.0.9"

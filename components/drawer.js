@@ -4,9 +4,9 @@
 // Eric Vicenti: https://twitter.com/EricVicenti
 // Video Tutorial: https://www.youtube.com/watch?v=ZzhOjO-1dCs
 
-import TestIndicator from '../screens/testindicat';
 import Qes from '../screens/qes'
 import FirstScreen from '../screens/FirstScreen';
+import Enter from '../screens/entertotest';
 
 import * as React from 'react';
 import { Text, View, Image, ScrollView, StyleSheet, Button, TouchableOpacity, Dimensions, Icon } from 'react-native';
@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
   },
 });
 const MyDrawerNavigator = createDrawerNavigator({
-    TestIndicator:
+    Enter:
 
   {
-    screen: TestIndicator,
+    screen: Enter,
     navigationOptions: {
       title: 'View Profile',
       drawerIcon: <Image
@@ -89,7 +89,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   },
   groups:
   {
-    screen: TestIndicator,
+    screen: Enter,
     navigationOptions: {
       title: 'Groups And Communities',
       drawerIcon: <Image
@@ -99,7 +99,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   },
   logout:
   {
-    screen: TestIndicator,
+    screen: Enter,
     navigationOptions: {
       title: 'Log Out',
       drawerIcon: <Image

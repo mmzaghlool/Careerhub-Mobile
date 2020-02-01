@@ -80,7 +80,7 @@ export default class TestIndicat extends React.Component {
                     <View style={styles.dynamicScreen}>
                         {this.renderPage()}
                     </View>
-                    <TouchableOpacity style={{ borderRadius: 30, marginTop: 9, width: '70%', marginLeft: 52, flexDirection: 'column' }}
+                    {/* <TouchableOpacity style={{ borderRadius: 30, marginTop: 9, width: '70%', marginLeft: 52, flexDirection: 'column' }}
                         onPress={() => { this.registerPressed() }}>
                         <LinearGradient
                             start={{ x: 0, y: 0 }}
@@ -89,7 +89,7 @@ export default class TestIndicat extends React.Component {
                             style={styles.linearGradient2}>
                             <Text style={{ color: '#ffffff', fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 9 }}>Next</Text>
                         </LinearGradient>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </LinearGradient>
             </View>
         );

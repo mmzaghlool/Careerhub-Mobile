@@ -1,6 +1,5 @@
 import {createAppContainer } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack';
-import TestIndicat from './screens/testindicat'
 import Qes from './screens/qes';
 import FirstScreen from './screens/FirstScreen';
 import Login from './screens/Registration/Login/Login';
@@ -14,28 +13,26 @@ import Profile from './screens/Profile/Profile'
 import Group from './screens/group'
 
 const AppNavigator = createStackNavigator({
+  Drawer:{
+    screen:Drawer
+  },
+ 
+  Enter:{
+    screen:Enter
+  },
   FirstScreen:{
     screen:FirstScreen
   },  
+        Qes:{
+          screen:Qes
+        },
   Group:{
     screen:Group
   },
   
-  Enter:{
-    screen:Enter
-  },
 
-  TestIndicat:{
-    screen:TestIndicat
-  },
 
-  Qes:{
-    screen:Qes
-  },
  
-  Drawer:{
-    screen:Drawer
-  },
   Login:{
     screen: Login
 },

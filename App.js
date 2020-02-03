@@ -13,22 +13,22 @@ import Profile from './screens/Profile/Profile'
 import Group from './screens/group'
 
 const AppNavigator = createStackNavigator({
+  Group:{
+    screen:Group
+  },
+  Enter:{
+    screen:Enter
+  },
   Drawer:{
     screen:Drawer
   },
  
-  Enter:{
-    screen:Enter
-  },
   FirstScreen:{
     screen:FirstScreen
   },  
         Qes:{
           screen:Qes
         },
-  Group:{
-    screen:Group
-  },
   
 
 

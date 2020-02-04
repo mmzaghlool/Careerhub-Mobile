@@ -10,8 +10,12 @@ import ForgetPassword3 from './screens/Registration/Login/ForgetPassword3';
 import Indicator from './screens/Registration/Signup/Indicator';
 import Drawer from './components/drawer'
 import Profile from './screens/Profile/Profile'
+import Community from './screens/Community'
 
 const AppNavigator = createStackNavigator({
+  Community:{
+    screen:Community
+  },  
   FirstScreen:{
     screen:FirstScreen
   },  

@@ -19,7 +19,7 @@ import CheckBox from 'react-native-check-box'
 
 const API = 'https://lit-plateau-32534.herokuapp.com';
 
-export default class Qes extends React.Component {
+export default class Group extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

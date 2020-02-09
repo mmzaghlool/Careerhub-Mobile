@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { SocialIcon } from 'react-native-elements';
+import AsyncStorage from "@react-native-community/async-storage";
+import Spinner from '../../../common/Loading';
 
 import firebase from "react-native-firebase";
-import { API_LINK } from '../../../common/Constants';
+import { API_LINK, USER } from '../../../common/Constants';
 
 const { height, width } = Dimensions.get('window')
 
@@ -27,6 +29,7 @@ export default class Login extends Component {
       emailError: '',
       passwordError: '',
       loading: false,
+      // spinner: true,
     }
   }
   onButtonPress = () => {
@@ -38,9 +41,6 @@ export default class Login extends Component {
       loading: true
     })
 
-
-    console.log();
-    
     if (this.state.email == '') {
       this.setState({ emailError: 'please enter email', loading: false })
     }
@@ -48,47 +48,61 @@ export default class Login extends Component {
       this.setState({ passwordError: 'please enter password', loading: false })
     }
     if (this.state.email != '' && this.state.password != '') {
-      
+
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then(res => this.onLoginSuccess(res))
         .catch(err => this.onLoginFail(err))
     }
-
-   
-
   }
 
-  onLoginSuccess(res) {
+  async onLoginSuccess(res) {
     console.log('res', res.user._user);
+    await fetch(`${API_LINK}/users/getUser/${res.user._user.uid}`)
+      .then(res => res.json())
+      .then(async res => {
+        console.log('res', res);
+        if (res.success) {
+          const user = res.user;
+          const userString = await JSON.stringify(user);
+          await AsyncStorage.setItem(USER, userString)
+          this.setState({
+            loading: false,
+          })
+          this.props.navigation.navigaFte('Profile', { user })
+        } else {
+          const message = res.message;
+          alert(message)
+          // Alert.alert('title', 'message', [
+          //   {text: 'ok', onPress: () => {}},
+          //   {text: 'ok', onPress: () => {}},
+          //   {text: 'ok', onPress: () => {}},
+          // ])
+        }
 
-    firebase.database().ref(`/users/${res.user._user.uid}`).once('value', (snap) => {
-      if (snap.exists()) {
-        const val = snap.val();
+      })
+      .catch(err => { })
+    // firebase.database().ref(`/users/${res.user._user.uid}`).once('value', (snap) => {
+    //   if (snap.exists()) {
+    //     const val = snap.val();
 
-        console.log('val', val);
-        
-      }
-    })
+    //     console.log('val', val);
 
-    firebase.database().ref(`/us/${res.user._user.uid}`).push(res)
-    const x = {
-      asdasdas: 'asdasdas',
-      ssss: 'asdasda'
-    } 
+    //   }
+    // })
 
-    firebase.database().ref(`/us/${res.user._user.uid}`).push(x)
+    // firebase.database().ref(`/us/${res.user._user.uid}`).push(res)
+    // const x = {
+    //   asdasdas: 'asdasdas',
+    //   ssss: 'asdasda'
+    // } 
 
-
-    this.setState({
-      loading: false,
-    })
-    this.props.navigation.navigate('Profile')
+    // firebase.database().ref(`/us/${res.user._user.uid}`).push(x)
   }
 
   onLoginFail(err) {
     console.log('err', err.code);
     alert(err)
-    
+
     this.setState({
       error: 'wrong email or password',
       loading: false
@@ -108,109 +122,113 @@ export default class Login extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
-        <View style={styles.basicBackground}>
+    const { spinner } = this.state;
+    if (spinner) {
+      return <Spinner />
+    } else {
+      return (
+        <View>
+          <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
+          <View style={styles.basicBackground}>
 
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.header1}>C</Text>
-            <Text style={styles.header2}>areer Hub</Text>
-          </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.header1}>C</Text>
+              <Text style={styles.header2}>areer Hub</Text>
+            </View>
 
-          <View style={styles.background}>
-            <Text style={styles.text}>Login</Text>
+            <View style={styles.background}>
+              <Text style={styles.text}>Login</Text>
 
-            <Text style={styles.text2}>Email</Text>
-            <TextInput
-              style={styles.inputText}
-              underlineColorAndroid='gray'
-              placeholder="Enter Email"
-              placeholderTextColor='gray'
-              value={this.state.email}
-              onChangeText={(email) => this.setState({ email })}
-            />
+              <Text style={styles.text2}>Email</Text>
+              <TextInput
+                style={styles.inputText}
+                underlineColorAndroid='gray'
+                placeholder="Enter Email"
+                placeholderTextColor='gray'
+                value={this.state.email}
+                onChangeText={(email) => this.setState({ email })}
+              />
 
-            <Text style={styles.error}>
-              {this.state.emailError}
-            </Text>
-
-            <Text style={styles.text2}>
-              Password
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              underlineColorAndroid='gray'
-              placeholder="Enter Password"
-              secureTextEntry={true}
-              placeholderTextColor='gray'
-              value={this.state.password}
-              onChangeText={(password) => this.setState({ password })}
-            />
-            <Text style={styles.error}>
-              {this.state.passwordError}
-              {this.state.error}
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ForgetPassword1')}>
-              <Text
-                style={styles.subtittle1}
-                underlineColorAndroid='5653e2'>
-                Forget Password?
+              <Text style={styles.error}>
+                {this.state.emailError}
               </Text>
-            </TouchableOpacity>
 
-            <View style={{ marginTop: height * 0.05 }}>
+              <Text style={styles.text2}>
+                Password
+            </Text>
+              <TextInput
+                style={styles.inputText}
+                underlineColorAndroid='gray'
+                placeholder="Enter Password"
+                secureTextEntry={true}
+                placeholderTextColor='gray'
+                value={this.state.password}
+                onChangeText={(password) => this.setState({ password })}
+              />
+              <Text style={styles.error}>
+                {this.state.passwordError}
+                {this.state.error}
+              </Text>
+
               <TouchableOpacity
-                onPress={this.onButtonPress.bind(this)}
-            
-              >
-                <LinearGradient
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  colors={['#5653e2', '#795EE3', '#ae71f2']}
-                  style={styles.linearGradient}>
-                  {/* <Text
+                onPress={() => this.props.navigation.navigate('ForgetPassword1')}>
+                <Text
+                  style={styles.subtittle1}
+                  underlineColorAndroid='5653e2'>
+                  Forget Password?
+              </Text>
+              </TouchableOpacity>
+
+              <View style={{ marginTop: height * 0.05 }}>
+                <TouchableOpacity
+                  onPress={this.onButtonPress.bind(this)}
+
+                >
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#5653e2', '#795EE3', '#ae71f2']}
+                    style={styles.linearGradient}>
+                    {/* <Text
                     style={styles.bottonText}>
                     Log in
                   </Text> */}
-                  {this.renderButton()}
-                </LinearGradient>
+                    {this.renderButton()}
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.or}>
+                ───────── OR ─────────
+            </Text>
+
+              <View style={styles.social}>
+                <View>
+                  <SocialIcon
+                    type='facebook'
+                  />
+                </View>
+                <View>
+                  <SocialIcon
+                    type='twitter'
+                  />
+                </View>
+              </View>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Indicator')}>
+                <Text
+                  style={styles.subtittle2}
+                  underlineColorAndroid='5653e2'>
+                  don't have an account?
+            </Text>
               </TouchableOpacity>
+
             </View>
-
-            <Text style={styles.or}>
-              ───────── OR ─────────
-            </Text>
-
-            <View style={styles.social}>
-              <View>
-                <SocialIcon
-                  type='facebook'
-                />
-              </View>
-              <View>
-                <SocialIcon
-                  type='twitter'
-                />
-              </View>
-            </View>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Indicator')}>
-              <Text
-                style={styles.subtittle2}
-                underlineColorAndroid='5653e2'>
-                don't have an account?
-            </Text>
-            </TouchableOpacity>
-
           </View>
         </View>
-      </View>
-
-    );
+      );
+    }
   };
 }
 const styles = StyleSheet.create({

@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         paddingTop: height * 0.03,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
     },
     item: {
         color: '#ffffff',

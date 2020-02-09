@@ -34,8 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new RNFirebaseAuthPackage());
           packages.add(new RNFirebaseDatabasePackage());
           packages.add(new RNFirebaseStoragePackage());
-          // packages.add(new VectorIconsPackage());
-        new VectorIconsPackage();
+           new VectorIconsPackage();
           return packages;
 
           // return Arrays.<ReactPackage>asList(

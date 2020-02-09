@@ -8,71 +8,103 @@ import {
   Dimensions
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
+import { USER } from '../common/Constants';
+import { StackActions, NavigationActions } from 'react-navigation';
+import Spinner from '../common/Loading';
 
 const { height, width } = Dimensions.get('window')
 
 export default class FirstScreen extends Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     // login:
-  //   }
-  //   AsyncStorage.getItem('Login')
-  //     .then((value) => {
-  //       this.setState({ login: value })
-  //       if (value == 1)
-  //         this.props.navigation.navigate('Profile')
-  //     })
-  // }
+  constructor() {
+    super()
+    this.state = {
+      spinner: true,
+      // login:
+    }
+    // AsyncStorage.getItem('Login')
+    //   .then((value) => {
+    //     this.setState({ login: value })
+    //     if (value == 1)
+    //       this.props.navigation.navigate('Profile')
+    //   })
+  }
+
+  async componentDidMount() {
+    const firebaseUser = firebase.auth().currentUser;
+    // firebase.auth().signOut();
+    // AsyncStorage.removeItem(USER)
+    if (firebaseUser) {
+      let user = await AsyncStorage.getItem(USER);
+      if (user) {
+        user = await JSON.parse(user);
+        console.log('user First Screen', user);
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Profile', params: { user } })],
+        });
+        this.props.navigation.dispatch(resetAction);
+
+      } else {
+        firebase.auth().signOut();
+        // AsyncStorage.removeItem(USER)
+      }
+    }
+    this.setState({ spinner: false })
+  }
+
   render() {
-    return (
-      <View>
-        <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
-        <View style={styles.basicBackground}>
+    const { spinner } = this.state;
+    if (spinner) {
+      return <Spinner />
+    } else {
+      return (
+        <View>
+          <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
+          <View style={styles.basicBackground}>
 
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.header1}>C</Text>
-            <Text style={styles.header2}>areer Hub</Text>
-          </View>
-
-          <View style={styles.background}>
-            <Text style={styles.text}>How do you want {"\n"} to continue</Text>
-            <View style={{ paddingTop: height * 0.01, paddingHorizontal: width * 0.01 }}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate('Login')
-                  const user =firebase.auth().currentUser;
-                  console.log('user', user);
-                   
-                }}>
-                <LinearGradient
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  colors={['#5653e2', '#795EE3', '#ae71f2']}
-                  style={styles.linearGradient}>
-                  <Text style={styles.bottonText}>Log in</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Indicator')}>
-                <LinearGradient
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  colors={['#5653e2', '#795EE3', '#ae71f2']}
-                  style={styles.linearGradient}>
-                  <Text style={styles.bottonText}>Sign up</Text>
-                </LinearGradient>
-              </TouchableOpacity>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.header1}>C</Text>
+              <Text style={styles.header2}>areer Hub</Text>
             </View>
-            <Text style={styles.subtittle}>Developed by career hub team</Text>
-          </View>
 
+            <View style={styles.background}>
+              <Text style={styles.text}>How do you want {"\n"} to continue</Text>
+              <View style={{ paddingTop: height * 0.01, paddingHorizontal: width * 0.01 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('Login')
+                    const user = firebase.auth().currentUser;
+                    console.log('user', user);
+                  }}>
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#5653e2', '#795EE3', '#ae71f2']}
+                    style={styles.linearGradient}>
+                    <Text style={styles.bottonText}>Log in</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Indicator')}>
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#5653e2', '#795EE3', '#ae71f2']}
+                    style={styles.linearGradient}>
+                    <Text style={styles.bottonText}>Sign up</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.subtittle}>Developed by career hub team</Text>
+            </View>
+
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   };
 }
 
@@ -118,8 +150,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.04,
     width: width * 0.75,
     height: height * 0.055,
-    // width:300,
-    // height: 40,
   },
   bottonText: {
     color: '#ffffff',

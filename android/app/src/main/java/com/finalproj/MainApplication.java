@@ -1,5 +1,6 @@
 package com.finalproj;
 
+// import com.oblador.vectoricons.VectorIconsPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -13,6 +14,7 @@ import java.util.List;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,8 +34,17 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new RNFirebaseAuthPackage());
           packages.add(new RNFirebaseDatabasePackage());
           packages.add(new RNFirebaseStoragePackage());
-          
+          // packages.add(new VectorIconsPackage());
+        new VectorIconsPackage();
           return packages;
+
+          // return Arrays.<ReactPackage>asList(
+          //   new MainReactPackage(),
+          //   new VectorIconsPackage(),
+          //   new RNFirebaseAuthPackage())
+          //   new RNFirebaseDatabasePackage(),
+          //   new RNFirebaseStoragePackage()
+          // );
         }
 
         @Override

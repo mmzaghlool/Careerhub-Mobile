@@ -170,32 +170,34 @@ export default class Indicator extends Component {
     // // console.log("sssss", user);
 
     // AsyncStorage.setItem(USER, user)
-    if (currentPage === 2) {
-      console.log("fetch");
 
-      await fetch(`${API_LINK}/users/registerUser`, {
-        method: "POST",
-        headers: {
-          'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: `+2${number}`,
-          email,
-          password,
-        })
-      }).then(res => res.json())
-        .then(res => {
 
-          console.log('reg res', res);
+    // if (currentPage === 2) {
+    //   console.log("fetch");
 
-        })
-        .catch(err => {
-          console.log('reg err', err);
+    //   await fetch(`${API_LINK}/users/registerUser`, {
+    //     method: "POST",
+    //     headers: {
+    //       'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //       firstName: firstName,
+    //       lastName: lastName,
+    //       phoneNumber: `+2${number}`,
+    //       email,
+    //       password,
+    //     })
+    //   }).then(res => res.json())
+    //     .then(res => {
 
-        })
-    }
+    //       console.log('reg res', res);
+
+    //     })
+    //     .catch(err => {
+    //       console.log('reg err', err);
+
+    //     })
+    // }
     // console.log('z3', this.state);
 
     if (this.state.currentPage === 0) {
@@ -275,7 +277,7 @@ export default class Indicator extends Component {
               }).then(res => res.json())
                 .then(res => {
                   console.log('reg res', res);
-                  this.onSigninSuccess()
+                  this.onSigninSuccess(res)
                 })
                 .catch(err => {
                   console.log('reg err', err);

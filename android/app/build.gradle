@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
+
 import com.android.build.OutputFile
 
 /**
@@ -182,8 +183,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    
-  implementation project(':react-native-firebase')    
+
+  implementation project(':react-native-firebase')
+    implementation project(':react-native-vector-icons')
     // Firebase dependencies
     implementation "com.google.android.gms:play-services-base:16.1.0"
     implementation "com.google.firebase:firebase-core:16.0.9"
@@ -191,8 +193,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation "com.google.firebase:firebase-database:17.0.0"
     implementation "com.google.firebase:firebase-storage:17.0.0"
-    implementation project(':react-native-vector-icons')    
-    
+    implementation project(':react-native-vector-icons')
+
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

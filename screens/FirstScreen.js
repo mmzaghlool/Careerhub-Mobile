@@ -32,25 +32,25 @@ export default class FirstScreen extends Component {
   }
 
   async componentDidMount() {
-    const firebaseUser = firebase.auth().currentUser;
-    // firebase.auth().signOut();
-    // AsyncStorage.removeItem(USER)
-    if (firebaseUser) {
-      let user = await AsyncStorage.getItem(USER);
-      if (user) {
-        user = await JSON.parse(user);
-        console.log('user First Screen', user);
-        const resetAction = StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'Profile', params: { user } })],
-        });
-        this.props.navigation.dispatch(resetAction);
+    // const firebaseUser = firebase.auth().currentUser;
+    // // firebase.auth().signOut();
+    // // AsyncStorage.removeItem(USER)
+    // if (firebaseUser) {
+    //   let user = await AsyncStorage.getItem(USER);
+    //   if (user) {
+    //     user = await JSON.parse(user);
+    //     console.log('user First Screen', user);
+    //     const resetAction = StackActions.reset({
+    //       index: 0,
+    //       actions: [NavigationActions.navigate({ routeName: 'Profile', params: { user } })],
+    //     });
+    //     this.props.navigation.dispatch(resetAction);
 
-      } else {
-        firebase.auth().signOut();
-        // AsyncStorage.removeItem(USER)
-      }
-    }
+    //   } else {
+    //     firebase.auth().signOut();
+    //     // AsyncStorage.removeItem(USER)
+    //   }
+    // }
     this.setState({ spinner: false })
   }
 

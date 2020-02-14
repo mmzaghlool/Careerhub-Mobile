@@ -12,24 +12,28 @@ import Drawer from './components/drawer'
 import Profile from './screens/Profile/Profile'
 import EditProfile from './screens/Profile/EditProfile'
 import Group from './screens/group'
+import HomeScreen from './screens/HomeScreen'
 
 const AppNavigator = createStackNavigator({
-
-  // Drawer:{
-  //   screen:Drawer
-  // },
-  // TestIndicat:{
-  //   screen:TestIndicat
-  // },
   FirstScreen: {
     screen: FirstScreen
-  },
-  Qes: {
-    screen: Qes
   },
   Login: {
     screen: Login
   },
+  Drawer:{
+    screen:Drawer
+  },
+  Qes: {
+    screen: Qes
+  },
+  // TestIndicat:{
+  //   screen:TestIndicat
+  // },
+  HomeScreen:{
+    screen:HomeScreen
+  },
+ 
   Group:{
     screen:Group
   },

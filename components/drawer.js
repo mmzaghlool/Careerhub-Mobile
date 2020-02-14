@@ -7,6 +7,8 @@
 import Qes from '../screens/qes'
 import FirstScreen from '../screens/FirstScreen';
 import Enter from '../screens/entertotest';
+import HomeScreen from '../screens/HomeScreen'
+import Profile from '../screens/Profile/Profile'
 
 import * as React from 'react';
 import { Text, View, Image, ScrollView, StyleSheet, Button, TouchableOpacity, Dimensions, Icon } from 'react-native';
@@ -21,16 +23,36 @@ const { height, width } = Dimensions.get('window')
 
 
 
-class B extends React.Component {
-  
-  render() {
+class Drawer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
+      avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'
+    };
+  }
+  async componentDidMount() {
+    const user = await this.props.navigation.state.params.haz;
+    console.log('ff',this.props.navigation.state.params.haz)
+    console.log('user Profile', this.props.navigation.state.params.haz);
+    console.log('user Profile', user);
+
+    this.setState({ ...user })
+    console.log(this.state)
+  }
+  render() {
+    const { avatar, firstName, lastName, user, skills, social, spinner, modal, show, send } = this.state;
+    console.log(avatar)
 
     return (
       <View>
         <View style={{ alignItems: 'center', marginTop: 35, marginBottom: 50, alignItems: 'center' }}>
           <Image
             source={require('../assets/icons/images.jpg')}
+            source={{
+              uri:
+               avatar,
+            }}
             style={{ width: 90, height: 90, borderRadius: 25, borderColor: 'black', borderWidth: 2 }} />
         </View>
         <View>
@@ -53,23 +75,23 @@ const styles = StyleSheet.create({
   },
 });
 const MyDrawerNavigator = createDrawerNavigator({
-    Enter:
+  HomeScreen:
 
   {
-    screen: Enter,
+    screen: HomeScreen,
     navigationOptions: {
-      title: 'View Profile',
+      title: 'Home',
       drawerIcon: <Image
         source={require('../assets/icons/cap.png')}
         style={styles.icon} />
     },
 
   },
-  Qes:
+  Profile:
   {
-    screen: Qes,
+    screen: Profile,
     navigationOptions: {
-      title: 'Browse recommended courses',
+      title: 'View Profile',
       drawerIcon: <Image
         source={require('../assets/icons/cap.png')}
         style={styles.icon} />
@@ -91,7 +113,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   {
     screen: Enter,
     navigationOptions: {
-      title: 'Groups And Communities',
+      title: 'Personality Test',
       drawerIcon: <Image
         source={require('../assets/icons/cap.png')}
         style={styles.icon} />
@@ -112,7 +134,7 @@ const MyDrawerNavigator = createDrawerNavigator({
 
 },
   {
-    contentComponent: B,
+    contentComponent: Drawer,
     drawerType: 'slide',
     contentOptions: {
       labelStyle: {

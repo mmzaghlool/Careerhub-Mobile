@@ -181,7 +181,7 @@ export default class Profile extends Component {
     else {
       return (
         <View style={styles.screen}>
-          {/* <View style={styles.header}>
+          <View style={styles.header}>
             <View style={styles.headerIcon}>
               <Icon
                 name="keyboard-backspace"
@@ -199,7 +199,7 @@ export default class Profile extends Component {
                 })}
               />
             </View>
-          </View> */}
+          </View>
 
           <View style={styles.header}>
             <View style={styles.headerIcon}>
@@ -308,7 +308,7 @@ export default class Profile extends Component {
               })
             }
           >
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 justifyContent: "center",
                 padding: 10,
@@ -320,7 +320,7 @@ export default class Profile extends Component {
                 })
               }
             >
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {this.renderModal()}
           </Modal>
           {show == true &&

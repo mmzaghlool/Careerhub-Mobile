@@ -50,7 +50,9 @@ export default class Login extends Component {
     if (this.state.email != '' && this.state.password != '') {
 
       firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(res => this.onLoginSuccess(res))
+      
+        .then(res => {this.onLoginSuccess(res)
+          console.log('hazem',res)})
         .catch(err => this.onLoginFail(err))
     }
   }
@@ -60,43 +62,23 @@ export default class Login extends Component {
     await fetch(`${API_LINK}/users/getUser/${res.user._user.uid}`)
       .then(res => res.json())
       .then(async res => {
-        console.log('res', res);
+        console.log('resresres', res);
         if (res.success) {
           const user = res.user;
           const userString = await JSON.stringify(user);
+          
           await AsyncStorage.setItem(USER, userString)
           this.setState({
             loading: false,
           })
-          this.props.navigation.navigaFte('Profile', { user })
+          this.props.navigation.navigate('Drawer', {haz:user})
         } else {
           const message = res.message;
           alert(message)
-          // Alert.alert('title', 'message', [
-          //   {text: 'ok', onPress: () => {}},
-          //   {text: 'ok', onPress: () => {}},
-          //   {text: 'ok', onPress: () => {}},
-          // ])
         }
 
       })
       .catch(err => { })
-    // firebase.database().ref(`/users/${res.user._user.uid}`).once('value', (snap) => {
-    //   if (snap.exists()) {
-    //     const val = snap.val();
-
-    //     console.log('val', val);
-
-    //   }
-    // })
-
-    // firebase.database().ref(`/us/${res.user._user.uid}`).push(res)
-    // const x = {
-    //   asdasdas: 'asdasdas',
-    //   ssss: 'asdasda'
-    // } 
-
-    // firebase.database().ref(`/us/${res.user._user.uid}`).push(x)
   }
 
   onLoginFail(err) {

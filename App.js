@@ -13,6 +13,7 @@ import Profile from './screens/Profile/Profile'
 import EditProfile from './screens/Profile/EditProfile'
 import Group from './screens/group'
 import HomeScreen from './screens/HomeScreen'
+import Community from './screens/Community'
 
 const AppNavigator = createStackNavigator({
   FirstScreen: {
@@ -55,7 +56,9 @@ const AppNavigator = createStackNavigator({
   EditProfile: {
     screen: EditProfile
   },
-
+  Community: {
+    screen: Community
+  }
 }, {
   headerMode: 'none'
 });

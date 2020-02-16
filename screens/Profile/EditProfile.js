@@ -42,7 +42,6 @@ export default class EditProfile extends Component {
 
     async componentDidMount() {
         const user = await this.props.navigation.state.params.user;
-        // const { user } = this.props;
         console.log('==================================');
         console.log('Edit Profile', user);
         this.setState({ ...user, spinner: false })
@@ -65,7 +64,8 @@ export default class EditProfile extends Component {
     }
 
     render() {
-        const { avatar, firstName, lastName, user, skills, social, spinner, modal, show, send } = this.state;
+        const { firstName, lastName, user, spinner } = this.state;
+        console.log('user', user);
         if (spinner) {
             return <Spinner />
         }
@@ -75,87 +75,73 @@ export default class EditProfile extends Component {
                     <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
                     <View style={styles.basicBackground}>
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.headerIcon}>
+                            {/* <View style={styles.headerIcon}>
                                 <Icon
                                     name="keyboard-backspace"
                                     size={35}
                                     color='#ffffff'
                                 />
-                            </View>
+                            </View> */}
                             <Text style={styles.header1}>Edit Profile</Text>
                         </View>
                         <View style={styles.background}>
                             <View>
                                 <Text style={styles.text2}>First Name</Text>
                                 <TextInput
-                                    // value={firstName}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter name"
                                     placeholderTextColor='gray'
-                                // onChangeText={(firstName) => {
-                                //     this.setState({ firstName })
-                                //     this.props.callBack("firstName", firstName)
-                                // }}
+                                    value={firstName}
+                                    onChangeText={(firstName) => this.setState({ firstName })}
                                 />
                                 <Text style={styles.text2}>Last Name</Text>
                                 <TextInput
-                                    // value={lastName}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter name"
                                     placeholderTextColor='gray'
-                                // onChangeText={(lastName) => {
-                                //     this.setState({ lastName })
-                                //     this.props.callBack("lastName", lastName)
-                                // }}
+                                    value={lastName}
+                                    onChangeText={(lastName) => this.setState({ lastName })}
                                 />
                                 <Text style={styles.text2}>Email</Text>
                                 <TextInput
-                                    // value={email}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter email"
                                     placeholderTextColor='gray'
-                                // onChangeText={(email) => this.props.callBack("email", email)}
+                                    value={email}
+                                    onChangeText={(email) => this.setState({ email })}
                                 />
                                 <Text style={styles.text2}>Mobile Number</Text>
                                 <TextInput
-                                    // value={number}
+                                    value={number}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
-                                    placeholder="Enter number"
+                                    placeholder="Enter phone number"
                                     placeholderTextColor='gray'
-                                // onChangeText={(number) => {
-                                //     this.setState({ number })
-                                //     this.props.callBack("number", number)
-                                // }}
+                                    value={number}
+                                    onChangeText={(number) => this.setState({ number })}
                                 />
                                 <Text style={styles.text2}>Password</Text>
                                 <TextInput
-                                    // value={password}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter Password"
                                     secureTextEntry={true}
                                     placeholderTextColor='gray'
-                                // onChangeText={(password) => {
-                                //     this.setState({ password })
-                                //     this.props.callBack("password", password)
-                                // }}
+                                    value={password}
+                                    onChangeText={(password) => this.setState({ password })}
                                 />
                                 <Text style={styles.text2}>Confirm Password</Text>
                                 <TextInput
-                                    // value={confirmPassword}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter Password"
                                     secureTextEntry={true}
                                     placeholderTextColor='gray'
-                                // onChangeText={(confirmPassword) => {
-                                //     this.setState({ confirmPassword })
-                                //     this.props.callBack("confirmPassword", confirmPassword)
-                                // }}
+                                    value={confirmPassword}
+                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
                                 />
                                 <View style={{ marginTop: height * 0.03 }}>
                                     <TouchableOpacity
@@ -194,7 +180,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         borderBottomRightRadius: 30,
         marginTop: height * 0.01,
-        paddingTop: height * 0.02,
+        paddingTop: height * 0.01,
         paddingBottom: height * 0.02,
         paddingLeft: width * 0.09,
         flexDirection: 'row'

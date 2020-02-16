@@ -27,10 +27,11 @@ export default class Group extends React.Component {
                 { id: 0, level: 'LEVEL ONE', checked: false },
                 { id: 1, level: 'LEVEL TWO', checked: false },
                 { id: 2, level: 'LEVEL THREE', checked: false },
-                { id: 3, level: 'LEVEL FOUR', checked: false }
+                // { id: 3, level: 'LEVEL FOUR', checked: false }
             ],
             j:0,
-            x:0
+            x:0,
+            checked: []
         }
 
     }
@@ -51,7 +52,7 @@ export default class Group extends React.Component {
 
 
                     this.checkThisBox(item.id);
-                    this.count(item.id)
+                    this.count()
                 }}
                 isChecked={this.state.data[item.id].checked}
 
@@ -63,25 +64,31 @@ export default class Group extends React.Component {
 
     )
     checkThisBox = (itemID) => {
-        let data = this.state.data
+        let { data, checked} = this.state
         data[itemID].checked = !data[itemID].checked
-        this.setState({ data: data })
+
+        const index = checked.lastIndexOf(itemID);
+        let newArr = [];
+        
+        if (index === -1) {
+            checked.push(itemID)
+        } else {
+            
+            checked.forEach(element => {
+                if (element !== itemID) {
+                    newArr.push(element);
+                }
+            });
+            checked = newArr;
+        }
+
+        this.setState({ data: data, checked })
     }
-    count = (id) => {
-       let data =this.state.data
-       let f = 1/data.length;
-       if(data[id].checked){
-           
-           this.state.j=this.state.j+f
-           this.state.x=parseInt(this.state.x+f*100)
-           
-       }
-       else {
-           this.state.j=this.state.j-f
-           this.state.x=parseInt(this.state.x-f*100)
-           
-       }
-            }
+    count = () => {
+       let { data, checked} =this.state;
+        const percent = Math.ceil((checked.length/data.length) * 100)        
+        this.setState({ j: percent })
+}
      
     render() {
 
@@ -93,25 +100,26 @@ export default class Group extends React.Component {
 
 
                 </TouchableOpacity>
-                <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
+                
+                <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}
+                    onPress={() => this.props.navigation.navigate('Community')}
+                >
                     <Icon name='people' color='white' size={42} />
                     <Text style={{ fontSize: 28, fontFamily: 'SEASRN__', color: 'white' }}>Community</Text>
-
-
                 </TouchableOpacity>
+
                 <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
                     <Text style={{ fontSize: 28, fontFamily: 'SEASRN__', color: 'white' }}>Members</Text>
-
-
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flex: .35, backgroundColor: '#4e446f', width: width, borderTopRightRadius: 25, borderTopLeftRadius: 25 }}>
+
+                <View style={{ flex: .35, backgroundColor: '#4e446f', width: width, borderTopRightRadius: 25, borderTopLeftRadius: 25 }}>
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
                         <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>Your Progress</Text>
-                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>{this.state.x}%</Text>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>{this.state.j}%</Text>
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                         <Progress.Bar progress={
-                         this.state.j
+                         this.state.j / 100
                         } width={270} color={'#a9a0c5'} unfilledColor={'white'} height={15} borderRadius={10} />
                     </View>
                     {/* <Text style={{ flex:.5,fontSize: 19, fontWeight: 'bold', color: 'white' }}>LEVEL 1</Text>
@@ -126,7 +134,7 @@ export default class Group extends React.Component {
                     />
 
 
-                </TouchableOpacity>
+                </View>
 
             </View>
 

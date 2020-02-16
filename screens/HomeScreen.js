@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Progress from 'react-native-progress/Circle';
 import LinearGradient from 'react-native-linear-gradient';
+import { Actions } from 'react-native-router-flux';
 
 const {width} = Dimensions.get('window');
 
@@ -53,7 +54,9 @@ export default class HomeScreen extends React.Component {
 
   renderListIcons(item) {
     return (
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item}
+        onPress={() => this.props.navigation.navigate('Group') }
+      >
         {/* <View style={StyleSheet.bigIcon}> */}
         <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}

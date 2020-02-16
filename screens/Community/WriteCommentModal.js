@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ImagePicker from 'react-native-image-picker';
 
 import Style from '../../common/Style'
+import firebase from 'react-native-firebase';
 
 // TODO: customize to comments and posts 
 export default class WriteCommentModal extends Component {
@@ -33,7 +34,7 @@ export default class WriteCommentModal extends Component {
             }
         };
         // get the image from gallery
-        ImagePicker.launchImageLibrary(options, (response) => {
+        ImagePicker.showImagePicker(options, (response) => {
 
             let imagePath;
 
@@ -62,7 +63,8 @@ export default class WriteCommentModal extends Component {
                 // upload the image to the storage under folder called Uploads with the timestamp of upload
                 const imageRef = firebase.storage().ref(`Uploads/${Date.now()}.jpg`)
                 await imageRef.putFile(uri, { contentType: 'application/octet-stream' })
-
+                // firebase.database().ref().orderByChild('user').equalTo('j5gYhsLlYXQr7TUpClZGYkoxQSW2')
+                // firebase.database().ref().push().key
                 // get the download url of the image 
                 let url = await imageRef.getDownloadURL()
 
@@ -86,7 +88,7 @@ export default class WriteCommentModal extends Component {
         return (
             <Image
                 // source={{uri: `data:${item.type};base64,${item.data}`}}
-                source={{uri: `${item.path}`}}
+                source={{uri: Platform.OS === 'ios'? `${item.path}`: `file://${item.path}`}}
                 style={{
                     width: 50,
                     height: '100%',

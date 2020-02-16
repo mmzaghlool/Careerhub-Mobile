@@ -18,7 +18,7 @@ import {
   SafeAreaView,
   DrawerNavigator
 } from 'react-navigation';
-import { createDrawerNavigator , DrawerItems} from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 const { height, width } = Dimensions.get('window')
 
 
@@ -33,7 +33,7 @@ class Drawer extends React.Component {
   }
   async componentDidMount() {
     const user = await this.props.navigation.state.params.haz;
-    console.log('ff',this.props.navigation.state.params.haz)
+    console.log('ff', this.props.navigation.state.params.haz)
     console.log('user Profile', this.props.navigation.state.params.haz);
     console.log('user Profile', user);
 
@@ -51,12 +51,12 @@ class Drawer extends React.Component {
             source={require('../assets/icons/images.jpg')}
             source={{
               uri:
-               avatar,
+                avatar,
             }}
             style={{ width: 90, height: 90, borderRadius: 25, borderColor: 'black', borderWidth: 2 }} />
         </View>
         <View>
-          <DrawerItems {...this.props}  />
+          <DrawerItems {...this.props} />
         </View>
 
       </View>
@@ -128,7 +128,7 @@ const MyDrawerNavigator = createDrawerNavigator({
         source={require('../assets/icons/cap.png')}
         style={styles.icon} />
     },
-    
+
   }
 
 

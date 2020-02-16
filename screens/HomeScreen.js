@@ -21,7 +21,7 @@ export default class HomeScreen extends React.Component {
         {name:'Machine Learning' , progress:'0.75'},
         {name:'Mobile Developing' , progress:'0.5'},
         {name:'Web Developing' , progress:'0.25'},
-        {name:'deskTop Developing' , progress:'0.75'},
+        {name:'Desktop Developing' , progress:'0.75'},
     
        ]
     }

@@ -10,12 +10,16 @@ import {
   Modal,
   TextInput,
   Button,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
 import { Avatar, Icon } from 'react-native-elements';
+import firebase from 'react-native-firebase';
+import AsyncStorage from '@react-native-community/async-storage';
+import { USER } from '../../common/Constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -80,7 +84,7 @@ export default class Profile extends Component {
   }
 
   ThirdRoute = () => {
-    // const {} = this.state;
+    const { achievement, spinner } = this.state;
     return <Achievements />
   }
 
@@ -142,6 +146,7 @@ export default class Profile extends Component {
                 borderRadius: 30,
                 width: width * 0.2,
                 height: height * 0.045,
+                elevation: 5
               }}
               onPress={() => this.setState({ modal: false })}
             >
@@ -159,6 +164,7 @@ export default class Profile extends Component {
                 borderRadius: 30,
                 width: width * 0.2,
                 height: height * 0.045,
+                elevation: 5
               }}
               onPress={() => { this.setState({ modal: false, show: true }) }}
             >
@@ -180,169 +186,158 @@ export default class Profile extends Component {
     }
     else {
       return (
-        <View style={styles.screen}>
-          <View style={styles.header}>
-            <View style={styles.headerIcon}>
-              <Icon
-                name="keyboard-backspace"
-                size={35}
-                color='#382d4b'
-              />
-            </View>
-            <View style={[styles.headerIcon, { marginTop: height * 0.02 }]}>
-              <MaterialCommunityIcons
-                name="alert-octagon"
-                size={40}
-                color='#382d4b'
-                onPress={() => this.setState({
-                  send: 'report', modal: true
-                })}
-              />
-            </View>
-          </View>
+        <ScrollView>
+          <View style={styles.screen}>
+            {/* visitor header */}
+            {/* <View style={styles.header}>
+              <View style={styles.headerIcon}>
+                <Icon
+                  name="keyboard-backspace"
+                  size={35}
+                  color='#382d4b'
+                />
+              </View>
+              <View style={[styles.headerIcon, { marginTop: height * 0.02 }]}>
+                <MaterialCommunityIcons
+                  name="alert-octagon"
+                  size={40}
+                  color='#382d4b'
+                  onPress={() => this.setState({
+                    send: 'report', modal: true
+                  })}
+                />
+              </View>
+            </View> */}
+            {/*  */}
 
-          <View style={styles.header}>
-            <View style={styles.headerIcon}>
-              {/* <Icon
-                name="keyboard-backspace"
-                size={35}
-                color='#382d4b'
-              /> */}
-              <FontAwesome
-                name="edit"
-                size={35}
-                color='#382d4b'
-                onPress={() => {
-                  this.props.navigation.navigate('EditProfile', { user })
-                  // const user = firebase.auth().currentUser;
-                  console.log('user', user);
-                }}
-              />
-            </View>
-            <View style={[styles.headerIcon, { marginTop: height * 0.02 }]}>
-              {/* <FontAwesome
-                name="edit"
-                size={35}
-                color='#382d4b'
-                onPress={() => {
-                  this.props.navigation.navigate('EditProfile', { user })
-                  // const user = firebase.auth().currentUser;
-                  console.log('user', user);
-                }}
-              /> */}
-              <Text style={{ color: '#382d4b', fontSize: 20, fontWeight: '700' }}>
-                Log out
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.basicBackground}>
-            <Avatar
-              style={styles.image}
-              rounded
-              size="xlarge"
-              source={{
-                uri:
-                  avatar,
-              }}
-            />
-            <Text style={styles.text}>
-              {firstName + ' ' + lastName}
-            </Text>
-            <View>
+            {/* current user header */}
+            <View style={styles.header}>
+              <View style={styles.headerIcon}>
+                <FontAwesome
+                  name="edit"
+                  size={35}
+                  color='#382d4b'
+                  onPress={() => {
+                    this.props.navigation.navigate('EditProfile', { user: user })
+                    // const user = firebase.auth().currentUser;
+                    console.log('user', user);
+                  }}
+                />
+              </View>
               <TouchableOpacity
-                style={styles.bottonText}
-                onPress={() => this.setState({
-                  send: 'ask', modal: true
-                })}
+                onPress={() => {
+                  firebase.auth().signOut();
+                  AsyncStorage.removeItem(USER)
+                  this.props.navigation.navigate('FirstScreen')
+                }}
               >
-                <LinearGradient
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  colors={['#5653e2', '#795EE3', '#ae71f2']}
-                  style={styles.linearGradient}>
-                  <Text
-                    style={styles.bottonText}>
-                    ASK
-                </Text>
-                </LinearGradient>
+                <View style={[styles.headerIcon, { marginTop: height * 0.02 }]}>
+                  <Text style={{ color: '#382d4b', fontSize: 20, fontWeight: '700' }}>
+                    Log out
+              </Text>
+                </View>
               </TouchableOpacity>
             </View>
-          </View >
-          <TabView
-            style={styles.tabView}
-            navigationState={this.state}
-            renderScene={SceneMap({
-              first: this.FirstRoute,
-              second: this.SecondRoute,
-              third: this.ThirdRoute,
-              fourth: this.FourthRoute,
-            })}
-            renderTabBar={props =>
-              <TabBar
-                {...props}
-                indicatorStyle={{ height: 8, backgroundColor: '#382d4b' }}
-                style={{ backgroundColor: '#ffffff' }}
-                tabStyle={{
-                  width: 'auto',
-                  marginHorizontal: 5.5,
-                  marginVertical: 10,
+            {/*  */}
+
+            <View style={styles.basicBackground}>
+              <Avatar
+                style={styles.image}
+                rounded
+                size="xlarge"
+                source={{
+                  uri:
+                    avatar,
                 }}
-                renderLabel={({ route }) => (
-                  <Text
-                    style={styles.tabBarLabel}>
-                    {route.title}
-                  </Text>
-                )}
               />
-            }
-            onIndexChange={index => this.setState({ index })}
-          />
-          <Modal
-            animationType="fade"
-            visible={modal}
-            transparent
-            onRequestClose={() =>
-              this.setState({
-                modal: false,
-              })
-            }
-          >
-            {/* <TouchableOpacity
-              style={{
-                justifyContent: "center",
-                padding: 10,
-                backgroundColor: modal === "notes" ? "white" : "rgba(0,0,0,0.7)",
-              }}
-              onPress={() =>
+              <Text style={styles.text}>
+                {firstName + ' ' + lastName}
+              </Text>
+
+              {/* Ask button */}
+              {/* <View>
+                <TouchableOpacity
+                  style={styles.bottonText}
+                  onPress={() => this.setState({
+                    send: 'ask', modal: true
+                  })}
+                >
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#5653e2', '#795EE3', '#ae71f2']}
+                    style={styles.linearGradient}>
+                    <Text
+                      style={styles.bottonText}>
+                      ASK
+                </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View> */}
+              {/*  */}
+            </View >
+            <TabView
+              style={styles.tabView}
+              navigationState={this.state}
+              renderScene={SceneMap({
+                first: this.FirstRoute,
+                second: this.SecondRoute,
+                third: this.ThirdRoute,
+                fourth: this.FourthRoute,
+              })}
+              renderTabBar={props =>
+                <TabBar
+                  {...props}
+                  indicatorStyle={{ height: 8, backgroundColor: '#382d4b' }}
+                  style={{ backgroundColor: '#ffffff' }}
+                  tabStyle={{
+                    width: 'auto',
+                    marginHorizontal: 5.5,
+                    marginVertical: 10,
+                  }}
+                  renderLabel={({ route }) => (
+                    <Text
+                      style={styles.tabBarLabel}>
+                      {route.title}
+                    </Text>
+                  )}
+                />
+              }
+              onIndexChange={index => this.setState({ index })}
+            />
+            <Modal
+              animationType="fade"
+              visible={modal}
+              transparent
+              onRequestClose={() =>
                 this.setState({
                   modal: false,
                 })
               }
             >
-            </TouchableOpacity> */}
-            {this.renderModal()}
-          </Modal>
-          {show == true &&
-            <View>
-              <SCLAlert
-                theme="success"
-                show={this.state.show}
-                title={send === 'ask' ? 'Your question has been' : 'Your report has been'}
-                subtitle='sent successfully'
-                titleStyle={{ fontWeight: 'bold', fontSize: 20, color: '#000000' }}
-                subtitleStyle={{ fontWeight: 'bold', fontSize: 20, color: '#000000' }}
-                onRequestClose={() => this.setState({ show: true })}
-              >
-                <SCLAlertButton
+              {this.renderModal()}
+            </Modal>
+            {show == true &&
+              <View>
+                <SCLAlert
                   theme="success"
-                  onPress={() => this.setState({ show: false })}
+                  show={this.state.show}
+                  title={send === 'ask' ? 'Your question has been' : 'Your report has been'}
+                  subtitle='sent successfully'
+                  titleStyle={{ fontWeight: 'bold', fontSize: 20, color: '#000000' }}
+                  subtitleStyle={{ fontWeight: 'bold', fontSize: 20, color: '#000000' }}
+                  onRequestClose={() => this.setState({ show: true })}
                 >
-                  Okey
+                  <SCLAlertButton
+                    theme="success"
+                    onPress={() => this.setState({ show: false })}
+                  >
+                    Okey
               </SCLAlertButton>
-              </SCLAlert>
-            </View>}
-        </View >
+                </SCLAlert>
+              </View>}
+          </View>
+        </ScrollView>
       );
     }
   }
@@ -351,11 +346,10 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
   },
   header: {
     justifyContent: 'space-between',
-    height: '7%',
     width: '100%',
     flexDirection: 'row',
   },

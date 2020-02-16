@@ -33,21 +33,21 @@ export default class FirstScreen extends Component {
 
   async componentDidMount() {
     // const firebaseUser = firebase.auth().currentUser;
-    // // firebase.auth().signOut();
-    // // AsyncStorage.removeItem(USER)
+    // console.log('firebaseUser', firebaseUser);
     // if (firebaseUser) {
     //   let user = await AsyncStorage.getItem(USER);
+    //   // console.log('user', user);
     //   if (user) {
     //     user = await JSON.parse(user);
     //     console.log('user First Screen', user);
     //     const resetAction = StackActions.reset({
     //       index: 0,
     //       actions: [NavigationActions.navigate({ routeName: 'Profile', params: { user } })],
+    //       // actions: [NavigationActions.navigate({ routeName: 'Drawer', params: { user } })],
     //     });
     //     this.props.navigation.dispatch(resetAction);
-
     //   } else {
-    //     firebase.auth().signOut();
+    //     // firebase.auth().signOut();
     //     // AsyncStorage.removeItem(USER)
     //   }
     // }
@@ -75,8 +75,8 @@ export default class FirstScreen extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.props.navigation.navigate('Login')
-                    const user = firebase.auth().currentUser;
-                    console.log('user', user);
+                    // const user = firebase.auth().currentUser;
+                    // console.log('user', user);
                   }}>
                   <LinearGradient
                     start={{ x: 0, y: 0 }}

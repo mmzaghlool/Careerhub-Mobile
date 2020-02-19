@@ -64,7 +64,7 @@ export default class EditProfile extends Component {
     }
 
     render() {
-        const { firstName, lastName, user, spinner } = this.state;
+        const { firstName, lastName, user, spinner, email, number, password, confirmPassword } = this.state;
         console.log('user', user);
         if (spinner) {
             return <Spinner />

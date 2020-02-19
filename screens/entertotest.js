@@ -37,7 +37,7 @@ export default class EnterToTest extends React.Component {
               <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>answer it</Text>
               <Image
                 style={{ marginLeft: 66, width: width*.7, height: height*.5, alignItems: 'stretch', justifyContent: 'center', marginTop: 65 }}
-                source={require('../assets/icons/icon.png')}
+                source={require('../assets/icons/icon.jpeg')}
               />
 
             </View>

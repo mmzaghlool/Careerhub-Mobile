@@ -95,7 +95,7 @@ export default class Group extends React.Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', marginTop: 30, justifyContent: 'space-between' }}>
                 <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 28, fontFamily: 'SEASRN__', color: 'white' }}>Chat</Text>
+                    <Text style={{ fontSize: 28, color: 'white' }}>Chat</Text>
                     <Icon name='chat' color='white' size={38} />
 
 
@@ -105,11 +105,11 @@ export default class Group extends React.Component {
                     onPress={() => this.props.navigation.navigate('Community')}
                 >
                     <Icon name='people' color='white' size={42} />
-                    <Text style={{ fontSize: 28, fontFamily: 'SEASRN__', color: 'white' }}>Community</Text>
+                    <Text style={{ fontSize: 28, color: 'white' }}>Community</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 28, fontFamily: 'SEASRN__', color: 'white' }}>Members</Text>
+                    <Text style={{ fontSize: 28, color: 'white' }}>Members</Text>
                 </TouchableOpacity>
 
                 <View style={{ flex: .35, backgroundColor: '#4e446f', width: width, borderTopRightRadius: 25, borderTopLeftRadius: 25 }}>

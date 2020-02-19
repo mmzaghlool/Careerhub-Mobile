@@ -82,7 +82,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     navigationOptions: {
       title: 'Home',
       drawerIcon: <Image
-        source={require('../assets/icons/cap.png')}
+        source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
 
@@ -93,7 +93,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     navigationOptions: {
       title: 'View Profile',
       drawerIcon: <Image
-        source={require('../assets/icons/cap.png')}
+        source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
 
 
@@ -105,7 +105,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     navigationOptions: {
       title: 'Messenger',
       drawerIcon: <Image
-        source={require('../assets/icons/cap.png')}
+        source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
   },
@@ -115,7 +115,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     navigationOptions: {
       title: 'Personality Test',
       drawerIcon: <Image
-        source={require('../assets/icons/cap.png')}
+        source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
   },
@@ -125,7 +125,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     navigationOptions: {
       title: 'Log Out',
       drawerIcon: <Image
-        source={require('../assets/icons/cap.png')}
+        source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
 

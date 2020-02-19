@@ -62,6 +62,12 @@
 		<string>Fontisto.ttf</string>
 		<string>ProximaNovaAltBlack.ttf</string>
 		<string>ProximaNovaAltRegular.ttf</string>
+		<string>Bumper.otf</string>
+		<string>DroidKufi-Bold.ttf</string>
+		<string>DroidKufi-Regular.ttf</string>
+		<string>SEASRN__.ttf</string>
+		<string>SpaceMono-Regular.ttf</string>
+		<string>wds052801.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

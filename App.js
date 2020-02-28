@@ -12,7 +12,7 @@ import Drawer from './components/drawer'
 import Profile from './screens/Profile/Profile'
 import EditProfile from './screens/Profile/EditProfile'
 import Group from './screens/group'
-
+import Splash from './screens/splash'
 const AppNavigator = createStackNavigator({
 
   // Drawer:{
@@ -21,6 +21,9 @@ const AppNavigator = createStackNavigator({
   // TestIndicat:{
   //   screen:TestIndicat
   // },
+  Splash:{
+    screen:Splash
+  },
   FirstScreen: {
     screen: FirstScreen
   },

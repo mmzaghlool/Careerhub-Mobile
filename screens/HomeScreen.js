@@ -60,6 +60,8 @@ export default class HomeScreen extends React.Component {
         {/* <View style={StyleSheet.bigIcon}> */}
         <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
+          //colors={['#0e1f35', '#21455c']}
+          
           style={styles.gradient}>
           <View
             style={{

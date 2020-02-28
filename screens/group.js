@@ -6,7 +6,8 @@ import {
     AsyncStorage,
     Dimensions,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    ScrollView
 } from 'react-native';
 import TestButton from '../components/testbutton';
 import firebase from 'react-native-firebase';
@@ -27,7 +28,7 @@ export default class Group extends React.Component {
                 { id: 0, level: 'LEVEL ONE', checked: false },
                 { id: 1, level: 'LEVEL TWO', checked: false },
                 { id: 2, level: 'LEVEL THREE', checked: false },
-                // { id: 3, level: 'LEVEL FOUR', checked: false }
+                    { id: 3, level: 'LEVEL FOUR', checked: false }
             ],
             j:0,
             x:0,
@@ -44,7 +45,7 @@ export default class Group extends React.Component {
 
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 50, marginTop: 30 }}>
-
+ 
             <Text style={{ flex: .5, fontSize: 19, fontWeight: 'bold', color: 'white', alignSelf: 'flex-start' }}>{item.level}</Text>
             <CheckBox
                 style={{ alignSelf: 'center', marginRight: 50 }}
@@ -57,9 +58,7 @@ export default class Group extends React.Component {
                 isChecked={this.state.data[item.id].checked}
 
             />
-
-
-
+           
         </View>
 
     )
@@ -94,25 +93,50 @@ export default class Group extends React.Component {
 
         return (
             <View style={{ flex: 1, alignItems: 'center', marginTop: 30, justifyContent: 'space-between' }}>
-                <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
+                 
+                <TouchableOpacity style={{ flex: .18, }}>
+                <LinearGradient
+          colors={['#9D76F3', '#7264ED', '#7466Ef']}
+          //colors={['#0e1f35', '#21455c']}
+          
+          style={styles.gradient}>
+              
                     <Text style={{ fontSize: 28, color: 'white' }}>Chat</Text>
                     <Icon name='chat' color='white' size={38} />
 
-
+            </LinearGradient>
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}
                     onPress={() => this.props.navigation.navigate('Community')}
                 >
+                    <LinearGradient
+          colors={['#9D76F3', '#7264ED', '#7466Ef']}
+          //colors={['#0e1f35', '#21455c']}
+          
+          style={styles.gradient}>
                     <Icon name='people' color='white' size={42} />
                     <Text style={{ fontSize: 28, color: 'white' }}>Community</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
+                <LinearGradient
+          colors={['#9D76F3', '#7264ED', '#7466Ef']}
+          //colors={['#0e1f35', '#21455c']}
+          
+          style={styles.gradient}>
                     <Text style={{ fontSize: 28, color: 'white' }}>Members</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
 
-                <View style={{ flex: .35, backgroundColor: '#4e446f', width: width, borderTopRightRadius: 25, borderTopLeftRadius: 25 }}>
+                <View style={{ flex: .35, borderTopRightRadius: 25, borderTopLeftRadius: 25,width:width }}>
+                    <ScrollView>
+                <LinearGradient
+          colors={['#9D76F3', '#7264ED', '#7466Ef']}
+          //colors={['#0e1f35', '#21455c']}
+          
+          style={styles.gradient2}>
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
                         <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>Your Progress</Text>
                         <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>{this.state.j}%</Text>
@@ -132,8 +156,8 @@ export default class Group extends React.Component {
                         disableVirtualization={true}
                         renderItem={this.renderItems}
                     />
-
-
+    </LinearGradient>
+    </ScrollView>
                 </View>
 
             </View>
@@ -145,51 +169,13 @@ export default class Group extends React.Component {
     }
 }
 const styles = StyleSheet.create({
-
-    dynamicScreen: {
-        backgroundColor: 'white',
-        marginTop: 10,
-        height: '80%',
-        borderRadius: 18,
-        flex: .95
-
-    },
-    linearGradient: {
-
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5,
-        height: '100%'
-    },
-    linearGradient2: {
-
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 15,
-        height: 40
-
-    }
+    gradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 30,
+        justifyContent: 'space-around', flexDirection: 'row', width: width * .8, borderRadius: 30, alignItems: 'center' 
+      },
+     
 
 });
 
-{/* <FlatList
-    data={packages}
-    extraData={this.state}
-    keyExtractor={this._keyExtractor}
-    renderItem={({ item }) => (
-        <ListItem>
-            <CheckBox style={{ marginRight: width * 0.05 }}
-                checked={selected == item.id}
-                onPress={() => {
-
-                    console.log(selected, "---------", item);
-                    console.log(this.state);
-                    this.setState({ selected: item.id })
-                }}
-            />
-            <Body>
-                <Text>{item.name}</Text>
-            </Body>
-        </ListItem>
-    )}
-/> */}

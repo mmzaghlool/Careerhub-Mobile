@@ -23,12 +23,12 @@ import {
     SCLAlert,
     SCLAlertButton
 } from 'react-native-scl-alert'
-
 import Spinner from '../../common/Loading';
 import Posts from './Posts';
 import Skills from './Skills';
 import Achievements from './Achievements';
 import SociaMedia from './SocialMedia';
+import { API_LINK, USER } from '../../common/Constants';
 
 const { height, width } = Dimensions.get('window')
 
@@ -42,13 +42,37 @@ export default class EditProfile extends Component {
 
     async componentDidMount() {
         const user = await this.props.navigation.state.params.user;
+
         console.log('==================================');
         console.log('Edit Profile', user);
         this.setState({ ...user, spinner: false })
     }
 
     onButtonPress = () => {
+        const { firstName, lastName, phoneNumber } = this.state;
 
+         fetch(`${API_LINK}/users/updateUser`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber
+            })
+        }).then(res => res.json())
+            .then(res => {
+                console.log('reg res', res);
+                this.onSigninSuccess(res)
+            })
+            .catch(err => {
+                console.log('reg err', err);
+                this.onSigninFail(err)
+            })
+        // firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        //   .then(this.onSigninSuccess.bind(this))
+        //   .catch(this.onSigninFail.bind(this))
     }
 
     renderButton() {
@@ -64,8 +88,8 @@ export default class EditProfile extends Component {
     }
 
     render() {
-        const { firstName, lastName, user, spinner } = this.state;
-        console.log('user', user);
+        const { firstName, lastName, email, phoneNumber, user, spinner } = this.state;
+        // console.log('user', user);
         if (spinner) {
             return <Spinner />
         }
@@ -104,7 +128,7 @@ export default class EditProfile extends Component {
                                     value={lastName}
                                     onChangeText={(lastName) => this.setState({ lastName })}
                                 />
-                                <Text style={styles.text2}>Email</Text>
+                                {/* <Text style={styles.text2}>Email</Text>
                                 <TextInput
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
@@ -112,26 +136,32 @@ export default class EditProfile extends Component {
                                     placeholderTextColor='gray'
                                     value={email}
                                     onChangeText={(email) => this.setState({ email })}
-                                />
+                                /> */}
                                 <Text style={styles.text2}>Mobile Number</Text>
                                 <TextInput
-                                    value={number}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter phone number"
                                     placeholderTextColor='gray'
-                                    value={number}
-                                    onChangeText={(number) => this.setState({ number })}
+                                    value={phoneNumber}
+                                    onChangeText={(phoneNumber) => this.setState({ phoneNumber })}
                                 />
-                                <Text style={styles.text2}>Password</Text>
+                                <TouchableOpacity
+                                    onPress={this.onButtonPress()}
+                                >
+                                    <Text style={styles.resetPassword}>
+                                        Reset Password
+                                </Text>
+                                </TouchableOpacity>
+                                {/* <Text style={styles.text2}>Password</Text>
                                 <TextInput
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter Password"
                                     secureTextEntry={true}
                                     placeholderTextColor='gray'
-                                    value={password}
-                                    onChangeText={(password) => this.setState({ password })}
+                                    // value={password}
+                                    // onChangeText={(password) => this.setState({ password })}
                                 />
                                 <Text style={styles.text2}>Confirm Password</Text>
                                 <TextInput
@@ -140,13 +170,12 @@ export default class EditProfile extends Component {
                                     placeholder="Enter Password"
                                     secureTextEntry={true}
                                     placeholderTextColor='gray'
-                                    value={confirmPassword}
-                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
-                                />
+                                    // value={confirmPassword}
+                                    // onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                                /> */}
                                 <View style={{ marginTop: height * 0.03 }}>
                                     <TouchableOpacity
                                         onPress={this.onButtonPress()}
-
                                     >
                                         <LinearGradient
                                             start={{ x: 0, y: 0 }}
@@ -171,19 +200,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#382d4b',
         height: '100%',
         width: '100%',
-        paddingTop: height * 0.01
+        paddingTop: height * 0.01,
     },
     background: {
         backgroundColor: '#ffffff',
-        height: '88%',
         width: '95%',
+        // height: '85%',
         borderTopRightRadius: 30,
         borderBottomRightRadius: 30,
         marginTop: height * 0.01,
         paddingTop: height * 0.01,
-        paddingBottom: height * 0.02,
+        paddingBottom: height * 0.05,
         paddingLeft: width * 0.09,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     headerIcon: {
         marginTop: width * 0.03,
@@ -276,5 +305,11 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 13,
         marginLeft: width * 0.01,
-    }
+    },
+    resetPassword: {
+        color: 'gray',
+        fontSize: 15,
+        marginLeft: width * 0.01,
+        marginTop: height * 0.01
+    },
 });

@@ -64,6 +64,8 @@ export default class Profile extends Component {
   async componentDidMount() {
     const user = await this.props.navigation.state.params.user;
     // const { user } = this.props;
+    this.setState({edit:user})
+
     console.log('==================================');
     console.log('user Profile', user);
     this.setState({ ...user, spinner: false })
@@ -218,7 +220,8 @@ export default class Profile extends Component {
                   size={35}
                   color='#382d4b'
                   onPress={() => {
-                    this.props.navigation.navigate('EditProfile', { user: user })
+                    this.props.navigation.navigate('EditProfile',{user:this.state.edit})
+                    // this.props.navigation.navigate('EditProfile', { user: user })
                     // const user = firebase.auth().currentUser;
                     console.log('user', user);
                   }}

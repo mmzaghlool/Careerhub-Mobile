@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 const { height, width } = Dimensions.get('window')
-
+import  { fun } from '../common/noti'
 import OneSignal from 'react-native-onesignal';
 
 const API = 'https://lit-plateau-32534.herokuapp.com';
@@ -24,17 +24,19 @@ export default class Group extends React.Component {
     }
 
     componentDidMount() {
+        fun();
         OneSignal.init("35f5da96-5e74-41f7-a388-388e44198b4c");// set kOSSettingsKeyAutoPrompt to false prompting manually on iOS
         
-        OneSignal.addEventListener('received', this.onReceived);
-        OneSignal.addEventListener('opened', this.onOpened);
+        // OneSignal.addEventListener('received', this.onReceived);
+        // OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('ids', this.onIds);
-        OneSignal.configure();
-    // this.props.navigation.navigate('FirstScreen')
+        OneSignal.inFocusDisplaying(2);
+        // OneSignal.configure();
+     this.props.navigation.navigate('FirstScreen')
     }
     componentWillUnmount() {
-        OneSignal.removeEventListener('received', this.onReceived);
-        OneSignal.removeEventListener('opened', this.onOpened);
+        // OneSignal.removeEventListener('received', this.onReceived);
+        // OneSignal.removeEventListener('opened', this.onOpened);
         OneSignal.removeEventListener('ids', this.onIds);
       }
     

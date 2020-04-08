@@ -50,9 +50,11 @@ export default class Login extends Component {
     if (this.state.email != '' && this.state.password != '') {
 
       firebase.auth().signInWithEmailAndPassword(email, password)
-      
-        .then(res => {this.onLoginSuccess(res)
-          console.log('hazem',res)})
+
+        .then(res => {
+          this.onLoginSuccess(res)
+          console.log('hazem', res)
+        })
         .catch(err => this.onLoginFail(err))
     }
   }
@@ -66,12 +68,12 @@ export default class Login extends Component {
         if (res.success) {
           const user = res.user;
           const userString = await JSON.stringify(user);
-          
+
           await AsyncStorage.setItem(USER, userString)
           this.setState({
             loading: false,
           })
-          this.props.navigation.navigate('Drawer', {haz:user})
+          this.props.navigation.navigate('Drawer', { user })
         } else {
           const message = res.message;
           alert(message)

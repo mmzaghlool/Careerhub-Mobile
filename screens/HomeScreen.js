@@ -6,35 +6,75 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Progress from 'react-native-progress/Circle';
 import LinearGradient from 'react-native-linear-gradient';
-import { Actions } from 'react-native-router-flux';
+import Style, { iphoneBottomPadding, iphoneTopPadding } from '../common/Style';
+import { updateUser } from '../common/User';
+import { API_LINK } from '../common/Constants';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listData: [
-        {name:'Machine Learning' , progress:'0.75'},
-        {name:'Mobile Developing' , progress:'0.5'},
-        {name:'Web Developing' , progress:'0.25'},
-        {name:'Desktop Developing' , progress:'0.75'},
-    
-       ]
+      listData: []
     }
   }
 
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
-    this.setState({totuser:user})
+    let user = await this.props.navigation.state.params.user;
+    this.setState({ user, ...user }, () => this.getData())
     console.log('user Profile', user);
-    this.setState({ ...user })
-    console.log('stste',this.state)
+    
+    
+
+    user = await updateUser();
+    if (user) {
+      this.setState({user, ...user})
+      console.log('user updated:', user);
+    }
+    
   }
+
+  async getData() {
+    const { user } = this.state
+    console.log('user updated:', user);
+
+    await fetch(`${API_LINK}/groups/${user.uid}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log('get groups res: ', res);
+        const { success, data, message } = res;
+
+        if (success) {
+          let listData = []; 
+
+          for (const key in data) {
+            const element = data[key];
+            const myProgress = 0.5
+            listData.push({
+              ...element,
+              myProgress
+            });
+          }
+
+          this.setState({ listData })
+          
+        } else {
+          console.log('get groups success = false: ', message);
+          
+        }
+      })
+      .catch(err => {
+        console.log('get groups err: ', err);
+      })
+
+  }
+
   renderFooterIcon(icon, text, onPress) {
     return (
       <TouchableOpacity
@@ -55,19 +95,19 @@ export default class HomeScreen extends React.Component {
   renderListIcons(item) {
     return (
       <TouchableOpacity style={styles.item}
-        onPress={() => this.props.navigation.navigate('Group') }
+        onPress={() => this.props.navigation.navigate('Group')}
       >
         {/* <View style={StyleSheet.bigIcon}> */}
         <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           style={styles.gradient}>
           <View
-            style={{
-              alignSelf: 'flex-end',
-            }}>
+            style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginBottom: 5}}
+          >
+            <Text style={[styles.listIcons, { fontWeight: 'bold', fontSize: 22 }]}>{item.instructor}</Text>
             <Progress
               showsText={true}
-              progress={item.progress}
+              progress={item.myProgress}
               thickness={7}
               size={60}
               color="#ffffff"
@@ -75,16 +115,13 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
-          <Text style={styles.listIcons}>{item.name}</Text>
+          <Text style={styles.listIcons}>{item.title}</Text>
         </LinearGradient>
         {/* </View> */}
       </TouchableOpacity>
     );
-    
-    
-  
   }
-   
+
   render() {
     const { listData } = this.state;
     return (
@@ -103,8 +140,8 @@ export default class HomeScreen extends React.Component {
           <FlatList
             data={listData}
             extraData={this.state}
-            renderItem={({item}) => this.renderListIcons(item)}
-            
+            renderItem={({ item }) => this.renderListIcons(item)}
+            keyExtractor={(item, index) => `${index}`}
           />
         </View>
 
@@ -116,9 +153,9 @@ export default class HomeScreen extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            {this.renderFooterIcon('email', 'Messages', () => {})}
-            {this.renderFooterIcon('account', 'Profile', () => {this.props.navigation.navigate('Profile',{user:this.state.totuser})})}
-            {this.renderFooterIcon('bell-ring', 'Notifications', () => {})}
+            {this.renderFooterIcon('email', 'Messages', () => { })}
+            {this.renderFooterIcon('account', 'Profile', () => { this.props.navigation.navigate('Profile', { user: this.state.user }) })}
+            {this.renderFooterIcon('bell-ring', 'Notifications', () => { })}
           </View>
         </View>
       </View>
@@ -129,6 +166,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? iphoneTopPadding : 0
   },
   headerText1: {
     fontSize: 24,
@@ -147,7 +185,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     width: '100%',
-    height: '17%',
+    paddingBottom: Platform.OS === 'ios' ? iphoneBottomPadding : 10
   },
   listContainer: {
     flex: 1,
@@ -179,7 +217,7 @@ const styles = StyleSheet.create({
   //   borderRadius: 5,
   // },
   listIcons: {
-    fontSize: 25,
+    fontSize: 23,
     color: 'white',
   },
   item: {
@@ -188,10 +226,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   gradient: {
-    width: '100%',
-    // height: '100%',
+    flex: 1,
     padding: 25,
-    borderRadius: 25,
+    borderRadius: 30,
   },
   styleText: {
     fontSize: 15,

@@ -32,9 +32,9 @@ class Drawer extends React.Component {
     };
   }
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
-    console.log('ff', this.props.navigation.state.params.haz)
-    console.log('user Profile', this.props.navigation.state.params.haz);
+    const user = await this.props.navigation.state.params.user;
+    console.log('ff', this.props.navigation.state.params.user)
+    console.log('user Profile', this.props.navigation.state.params.user);
     console.log('user Profile', user);
 
     this.setState({ ...user })
@@ -75,20 +75,17 @@ const styles = StyleSheet.create({
   },
 });
 const MyDrawerNavigator = createDrawerNavigator({
-  HomeScreen:
-
-  {
+  HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
       title: 'Home',
       drawerIcon: <Image
         source={require('../assets/icons/cap.jpeg')}
-        style={styles.icon} />
+        style={styles.icon} />,
     },
 
   },
-  Profile:
-  {
+  Profile: {
     screen: Profile,
     navigationOptions: {
       title: 'View Profile',

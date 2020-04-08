@@ -5,8 +5,8 @@ import {
   getBottomSpace,
 } from 'react-native-iphone-x-helper';
 
-const iphoneTopPadding = isIphoneX() ? getStatusBarHeight() + 8 : 20;
-const iphoneBottomPadding = isIphoneX() ? getBottomSpace() : 1;
+export const iphoneTopPadding = isIphoneX() ? getStatusBarHeight() + 8 : 20;
+export const iphoneBottomPadding = isIphoneX() ? getBottomSpace() : 1;
 
 export default StyleSheet.create({
   elevation: {

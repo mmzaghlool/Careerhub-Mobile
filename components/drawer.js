@@ -32,17 +32,18 @@ class Drawer extends React.Component {
     };
   }
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
-    console.log('ff', this.props.navigation.state.params.haz)
-    console.log('user Profile', this.props.navigation.state.params.haz);
+    const user = await this.props.navigation.state.params.user;
+    console.log('ff', this.props.navigation.state.params.user)
+    console.log('user Profile', this.props.navigation.state.params.user);
     console.log('user Profile', user);
 
     this.setState({ ...user })
     console.log(this.state)
+    console.log('ss');
+    
   }
   render() {
     const { avatar, firstName, lastName, user, skills, social, spinner, modal, show, send } = this.state;
-    console.log(avatar)
 
     return (
       <View>

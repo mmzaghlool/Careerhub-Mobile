@@ -23,12 +23,15 @@ import {
     SCLAlert,
     SCLAlertButton
 } from 'react-native-scl-alert'
+import { USER} from '../../common/Constants';
 
 import Spinner from '../../common/Loading';
 import Posts from './Posts';
 import Skills from './Skills';
 import Achievements from './Achievements';
 import SociaMedia from './SocialMedia';
+import firebase from 'react-native-firebase';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const { height, width } = Dimensions.get('window')
 
@@ -44,28 +47,35 @@ export default class EditProfile extends Component {
         const user = await this.props.navigation.state.params.user;
         console.log('==================================');
         console.log('Edit Profile', user);
+        this.setState({ user })
         this.setState({ ...user, spinner: false })
     }
 
-    onButtonPress = () => {
-
-    }
+   
 
     renderButton() {
         if (this.state.loading) {
             return <ActivityIndicator size="large" color="#ffffff" />
         }
-        return (
-            <Text
-                style={styles.bottonText}>
-                Save
-          </Text>
-        )
+        
     }
 
+
+    onButton = (newData) => {
+
+   firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).update(
+     newData
+   ),
+
+     AsyncStorage.setItem(USER,JSON.stringify(newData));
+     
+
+    }
     render() {
-        const { firstName, lastName, user, spinner, email, number, password, confirmPassword } = this.state;
-        console.log('user', user);
+        const { firstName, lastName, user, spinner, email, phoneNumber, password, confirmPassword } = this.state;
+        const userr = {firstName,lastName,phoneNumber,email}
+
+        
         if (spinner) {
             return <Spinner />
         }
@@ -90,7 +100,7 @@ export default class EditProfile extends Component {
                                 <TextInput
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
-                                    placeholder="Enter name"
+                                    placeholder={firstName}
                                     placeholderTextColor='gray'
                                     value={firstName}
                                     onChangeText={(firstName) => this.setState({ firstName })}
@@ -115,13 +125,13 @@ export default class EditProfile extends Component {
                                 />
                                 <Text style={styles.text2}>Mobile Number</Text>
                                 <TextInput
-                                    value={number}
+                                    value={phoneNumber}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter phone number"
                                     placeholderTextColor='gray'
-                                    value={number}
-                                    onChangeText={(number) => this.setState({ number })}
+                                    value={phoneNumber}
+                                    onChangeText={(phoneNumber) => this.setState({ phoneNumber })}
                                 />
                                 <Text style={styles.text2}>Password</Text>
                                 <TextInput
@@ -145,7 +155,13 @@ export default class EditProfile extends Component {
                                 />
                                 <View style={{ marginTop: height * 0.03 }}>
                                     <TouchableOpacity
-                                        onPress={this.onButtonPress()}
+                                        //onPress={this.onButtonPress(this.state.user)}
+                                        onPress={ () => {
+                                            
+                                            this.onButton(userr)
+                                    
+                                    }}
+
 
                                     >
                                         <LinearGradient
@@ -153,7 +169,10 @@ export default class EditProfile extends Component {
                                             end={{ x: 1, y: 0 }}
                                             colors={['#5653e2', '#795EE3', '#ae71f2']}
                                             style={styles.linearGradient}>
-                                            {this.renderButton()}
+                                            <Text
+                                                style={styles.bottonText}>
+                                                Save
+                                            </Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
                                 </View>

@@ -71,7 +71,7 @@ export default class Login extends Component {
           this.setState({
             loading: false,
           })
-          this.props.navigation.navigate('Drawer', {haz:user})
+          this.props.navigation.navigate('Drawer', {user})
         } else {
           const message = res.message;
           alert(message)

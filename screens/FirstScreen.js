@@ -39,6 +39,7 @@ export default class FirstScreen extends Component {
       // console.log('user', user);
       if (user) {
         user = await JSON.parse(user);
+        
         console.log('user First Screen', user);
         const resetAction = StackActions.reset({
           index: 0,

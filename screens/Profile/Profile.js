@@ -33,6 +33,7 @@ import Posts from './Posts';
 import Skills from './Skills';
 import Achievements from './Achievements';
 import SociaMedia from './SocialMedia';
+import ImagePicker from 'react-native-image-picker';
 
 const { height, width } = Dimensions.get('window')
 
@@ -48,6 +49,7 @@ export default class Profile extends Component {
       modal: false,
       show: false,
       index: 0,
+      images: [],
       routes: [
         { key: 'first', title: 'Posts' },
         { key: 'second', title: 'Skills' },
@@ -60,12 +62,82 @@ export default class Profile extends Component {
       avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'
     };
   }
+  async uploadImage(uri) {
+    try {
+        if (uri) {   
+            console.log('yes');
+                         
+            // upload the image to the storage under folder called Uploads with the timestamp of upload
+            const imageRef = firebase.storage().ref(`Uploads/${Date.now()}.jpg`)
+            await imageRef.putFile(uri, { contentType: 'application/octet-stream' })
+            
+            // get the download url of the image 
+            let url = await imageRef.getDownloadURL()
 
+            this.setState({url})
+
+           
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).update(
+  { avatar:url}
+              )
+           console.log(firebase.auth().currentUser.uid);
+           
+           this.setState({
+            loading: false,
+          })
+            // send the url to the other person at the chat
+            
+            
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+selectImage() {
+    // try {
+    let { images } = this.state;
+
+    // the options for picking the image  
+    const options = {
+        quality: 0.5,
+        // maxWidth: 500,
+        // maxHeight: 500,
+        storageOptions: {
+            skipBackup: true
+        }
+    };
+    // get the image from gallery
+    ImagePicker.launchImageLibrary(options, (response) => {
+
+        let imagePath;
+
+        if (Platform.OS === "android") imagePath = response.path;
+        else imagePath = response.uri;
+
+        console.log('response', response);
+        if (!response.didCancel){
+            images.push({
+                path: imagePath,
+                data: response.data,
+                type: response.type
+            })
+            this.setState({ images });
+            let source = { uri: 'data:image/jpeg;base64,' + response.data };
+            this.setState({response :response.data})
+        } 
+         this.uploadImage(response.path);
+    });
+    // } catch (e) {
+    //     console.log(e);
+    // }
+}
   async componentDidMount() {
     const user = await this.props.navigation.state.params.user;
     // const { user } = this.props;
     console.log('==================================');
     console.log('user Profile', user);
+    this.setState({ user })
     this.setState({ ...user, spinner: false })
   }
 
@@ -218,9 +290,8 @@ export default class Profile extends Component {
                   size={35}
                   color='#382d4b'
                   onPress={() => {
-                    this.props.navigation.navigate('EditProfile', { user: user })
+                    this.props.navigation.navigate('EditProfile', { user: this.state.user })
                     // const user = firebase.auth().currentUser;
-                    console.log('user', user);
                   }}
                 />
               </View>
@@ -241,6 +312,13 @@ export default class Profile extends Component {
             {/*  */}
 
             <View style={styles.basicBackground}>
+              <TouchableOpacity   onPress={() => {
+                
+                console.log('ok');
+                
+                this.selectImage()}}
+                
+                >
               <Avatar
                 style={styles.image}
                 rounded
@@ -250,6 +328,7 @@ export default class Profile extends Component {
                     avatar,
                 }}
               />
+              </TouchableOpacity>
               <Text style={styles.text}>
                 {firstName + ' ' + lastName}
               </Text>

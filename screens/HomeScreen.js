@@ -19,7 +19,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       listData: [
-        {name:'Machine Learning' , progress:'0.75'},
+        {name:'Machine Learning' , progress:'.75'},
         {name:'Mobile Developing' , progress:'0.5'},
         {name:'Web Developing' , progress:'0.25'},
         {name:'Desktop Developing' , progress:'0.75'},
@@ -29,7 +29,7 @@ export default class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
+    const user = await this.props.navigation.state.params.user;
     this.setState({totuser:user})
     console.log('user Profile', user);
     this.setState({ ...user })
@@ -68,6 +68,7 @@ export default class HomeScreen extends React.Component {
               alignSelf: 'flex-end',
             }}>
             <Progress
+              animated={false}
               showsText={true}
               progress={item.progress}
               thickness={7}

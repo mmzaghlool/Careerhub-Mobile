@@ -14,10 +14,15 @@ import EditProfile from './screens/Profile/EditProfile'
 import Group from './screens/group'
 import HomeScreen from './screens/HomeScreen'
 import Community from './screens/Community'
+import Submit from './screens/submitCourse'
 
 const AppNavigator = createStackNavigator({
+
   FirstScreen: {
     screen: FirstScreen
+  },
+  Submit: {
+    screen: Submit
   },
   Login: {
     screen: Login

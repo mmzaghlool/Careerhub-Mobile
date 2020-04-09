@@ -33,13 +33,16 @@ export default class FirstScreen extends Component {
 
   async componentDidMount() {
     const firebaseUser = firebase.auth().currentUser;
-    console.log('firebaseUser', firebaseUser);
+    // const uid = firebaseUser._user.uid;
+    // console.log('firebaseUser', firebaseUser);
+    // console.log('uid', uid);
+
     if (firebaseUser) {
       let user = await AsyncStorage.getItem(USER);
       // console.log('user', user);
       if (user) {
         user = await JSON.parse(user);
-        console.log('user First Screen', user);
+        // console.log('user First Screen', user);
         const resetAction = StackActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Drawer', params: { user } })],

@@ -32,10 +32,10 @@ class Drawer extends React.Component {
     };
   }
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
-    console.log('ff', this.props.navigation.state.params.haz)
-    console.log('user Profile', this.props.navigation.state.params.haz);
-    console.log('user Profile', user);
+    const user = await this.props.navigation.state.params.user;
+    console.log('ff', this.props.navigation.state.params.user)
+    // console.log('user Profile', this.props.navigation.state.params.haz);
+    console.log('Drawer', user);
 
     this.setState({ ...user })
     console.log(this.state)
@@ -49,10 +49,12 @@ class Drawer extends React.Component {
         <View style={{ alignItems: 'center', marginTop: 35, marginBottom: 50, alignItems: 'center' }}>
           <Image
             source={require('../assets/icons/images.jpg')}
-            source={{
-              uri:
-                avatar,
-            }}
+            // source={{
+            //   uri:
+            //     avatar,
+            // }}
+            source={require('../assets/icons/images.jpg')}
+
             style={{ width: 90, height: 90, borderRadius: 25, borderColor: 'black', borderWidth: 2 }} />
         </View>
         <View>

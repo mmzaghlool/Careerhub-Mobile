@@ -11,29 +11,34 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Progress from 'react-native-progress/Circle';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
+import { API_LINK, USER } from '../common/Constants';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listData: [
-        {name:'Machine Learning' , progress:'0.75'},
-        {name:'Mobile Developing' , progress:'0.5'},
-        {name:'Web Developing' , progress:'0.25'},
-        {name:'Desktop Developing' , progress:'0.75'},
-    
-       ]
+        { name: 'Machine Learning', progress: '0.75' },
+        { name: 'Mobile Developing', progress: '0.5' },
+        { name: 'Web Developing', progress: '0.25' },
+        { name: 'Desktop Developing', progress: '0.75' },
+
+      ]
     }
   }
 
   async componentDidMount() {
-    const user = await this.props.navigation.state.params.haz;
-    this.setState({totuser:user})
-    console.log('user Profile', user);
+    //let user = await AsyncStorage.getItem(USER);
+    // const user = await this.props.navigation.state.params.user;
+
+    const user = await this.props.navigation.state.params.user;
+    this.setState({ totuser: user })
+    // console.log('user Profile 3', totuser);
+    // console.log('Home', user);
     this.setState({ ...user })
-    console.log('stste',this.state)
+    // console.log('stste', this.state)
   }
   renderFooterIcon(icon, text, onPress) {
     return (
@@ -55,13 +60,13 @@ export default class HomeScreen extends React.Component {
   renderListIcons(item) {
     return (
       <TouchableOpacity style={styles.item}
-        onPress={() => this.props.navigation.navigate('Group') }
+        onPress={() => this.props.navigation.navigate('Group')}
       >
         {/* <View style={StyleSheet.bigIcon}> */}
         <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           //colors={['#0e1f35', '#21455c']}
-          
+
           style={styles.gradient}>
           <View
             style={{
@@ -82,18 +87,20 @@ export default class HomeScreen extends React.Component {
         {/* </View> */}
       </TouchableOpacity>
     );
-    
-    
-  
+
+
+
   }
-   
+
   render() {
-    const { listData } = this.state;
+    const { listData, firstName, lastName } = this.state;
     return (
+
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.textContainer}>
-          <Text style={styles.headerText1}>Hey  {this.state.firstName + ' ' + this.state.lastName}</Text>
+          <Text style={styles.headerText1}>Hey  {firstName + ' ' + lastName}</Text>
+          {/* <Text style={styles.headerText1}>Hey  {this.state.firstName + ' ' + this.state.lastName}</Text> */}
           <Text style={styles.headerText2}>-Your tracks</Text>
         </View>
 
@@ -105,8 +112,8 @@ export default class HomeScreen extends React.Component {
           <FlatList
             data={listData}
             extraData={this.state}
-            renderItem={({item}) => this.renderListIcons(item)}
-            
+            renderItem={({ item }) => this.renderListIcons(item)}
+
           />
         </View>
 
@@ -118,9 +125,9 @@ export default class HomeScreen extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            {this.renderFooterIcon('email', 'Messages', () => {})}
-            {this.renderFooterIcon('account', 'Profile', () => {this.props.navigation.navigate('Profile',{user:this.state.totuser})})}
-            {this.renderFooterIcon('bell-ring', 'Notifications', () => {})}
+            {this.renderFooterIcon('email', 'Messages', () => { })}
+            {this.renderFooterIcon('account', 'Profile', () => { this.props.navigation.navigate('Profile', { user: this.state.totuser }) })}
+            {this.renderFooterIcon('bell-ring', 'Notifications', () => {this.props.navigation.navigate('Tracks', { user: this.state.totuser }) })}
           </View>
         </View>
       </View>

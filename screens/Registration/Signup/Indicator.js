@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import StepIndicator from 'react-native-step-indicator';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from "react-native-firebase";
+import { validatePhone, validateEmail } from "../../../common/Validation";
 
 import Signup1 from './Signup1';
 import Signup2 from './Signup2';
@@ -97,7 +98,7 @@ export default class Indicator extends Component {
   renderSignup = () => {
     // const { number, name, email } = this.state;
     const { firstName, lastName, email, number, password, confirmPassword } = this.state;
-    console.log('indicator', this.state);
+    // console.log('indicator', this.state);
 
     switch (this.state.display) {
       case 'Signup1':
@@ -106,7 +107,7 @@ export default class Indicator extends Component {
           lastName={lastName}
           callBack={(type, val) => {
             this.setState({ [type]: val })
-            console.log('Signup1', this.state);
+            // console.log('Signup1', this.state);
           }}
         />
       case 'Signup2':
@@ -115,7 +116,7 @@ export default class Indicator extends Component {
           number={number}
           callBack={(type, val) => {
             this.setState({ [type]: val })
-            console.log('Signup2', this.state);
+            // console.log('Signup2', this.state);
           }}
         />
       case 'Signup3':
@@ -124,7 +125,7 @@ export default class Indicator extends Component {
           confirmPassword={confirmPassword}
           callBack={(type, val) => {
             this.setState({ [type]: val })
-            console.log('Signup3', this.state);
+            // console.log('Signup3', this.state);
           }}
         />
     }
@@ -147,16 +148,16 @@ export default class Indicator extends Component {
     // this.state.footer === 'Footer1' ? this.setState({ footer: 'Footer2' }) : this.setState({ footer: 'Footer3' })
 
     // const { number, email, name, currentPage, password } = this.state;
-    console.log('x', this.state);
+    // console.log('x', this.state);
 
     const { currentPage, firstName, lastName, email, number, password, confirmPassword } = this.state;
-    console.log('y', this.state);
+    // console.log('y', this.state);
 
     this.setState({
       error: '',
       loading: true,
     })
-    console.log('z1', this.state);
+    // console.log('z1', this.state);
 
     // const number = this.state.number;
     // const email = this.state.email;
@@ -200,10 +201,10 @@ export default class Indicator extends Component {
     // }
     // console.log('z3', this.state);
 
-    if (this.state.currentPage === 0) {
-      console.log('page0', this.state);
+    if (currentPage === 0) {
+      // console.log('page0', this.state);
 
-      if (this.state.firstName == '' || this.state.lastName == '') {
+      if (firstName == '' || lastName == '') {
         this.setState({
           error: 'please enter your data',
           loading: false
@@ -211,7 +212,7 @@ export default class Indicator extends Component {
       }
 
       else
-        if (this.state.firstName != '' && this.state.lastName != '') {
+        if (firstName != '' && lastName != '') {
           this.setState({
             currentPage: 1,
             text: 'Next',
@@ -223,35 +224,51 @@ export default class Indicator extends Component {
     }
 
     else
-      if (this.state.currentPage === 1) {
-        console.log('page1', this.state);
+      if (currentPage === 1) {
+        // console.log('page1', this.state);
 
         this.setState({ error: '' })
-        if (this.state.email == '' || this.state.number == '') {
+        if (email == '' && number == '') {
           this.setState({
             error: 'please enter your data',
             loading: false
           })
         }
         else
-          if (this.state.email != '' && this.state.number != '') {
+          if (!validateEmail(email)) {
+            // console.log(validateEmail(email), validatePhone(number));
             this.setState({
-              currentPage: 2,
-              text: 'Signup',
-              display: 'Signup3',
-              footer: 'Footer3',
+              error: 'Invalid email',
               loading: false
             })
           }
+          else
+            if (!validatePhone(number)) {
+              // console.log(validateEmail(email), validatePhone(number));
+              this.setState({
+                error: 'Invalid phone number',
+                loading: false
+              })
+            }
+            else
+              if (email != '' && number != '') {
+                this.setState({
+                  currentPage: 2,
+                  text: 'Signup',
+                  display: 'Signup3',
+                  footer: 'Footer3',
+                  loading: false
+                })
+              }
       }
 
       else
-        if (this.state.currentPage === 2) {
-          console.log('page2', this.state);
+        if (currentPage === 2) {
+          // console.log('page2', this.state);
           // console.log('password', this.state.password)
           // console.log('confirmPassword', this.state.confirmPassword)
           this.setState({ error: '' })
-          if (this.state.password == '' || this.state.confirmPassword == '') {
+          if (password == '' || confirmPassword == '') {
             this.setState({
               error: 'please enter your data',
               loading: false
@@ -259,7 +276,7 @@ export default class Indicator extends Component {
           }
           else
             // if (this.state.password != '' && this.state.confirmPassword != '') {
-            if (this.state.password === this.state.confirmPassword) {
+            if (password === confirmPassword) {
               // this.props.navigation.navigate('Profile')
 
               await fetch(`${API_LINK}/users/registerUser`, {
@@ -297,7 +314,26 @@ export default class Indicator extends Component {
         }
   }
 
-  onSigninSuccess() {
+  async onSigninSuccess(res) {
+    if (res.success) {
+      const user = res.user;
+      const userString = await JSON.stringify(user);
+
+      await AsyncStorage.setItem(USER, userString)
+      this.setState({
+        loading: false,
+      })
+      this.props.navigation.navigate('Drawer', { user })
+    } else {
+      const message = res.message;
+      console.log(' message', message);
+      alert(message)
+
+      if (message === 'PHONE_NUMBER_EXISTS') {
+        alert('Phone number already exists')
+      }
+      
+    }
     this.setState({
       loading: false,
     })
@@ -305,6 +341,7 @@ export default class Indicator extends Component {
   }
 
   onSigninFail(err) {
+    console.log('err', err)
     this.setState({
       error: 'Sign up Failed',
       loading: false

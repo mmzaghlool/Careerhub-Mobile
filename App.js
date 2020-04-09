@@ -14,6 +14,8 @@ import EditProfile from './screens/Profile/EditProfile'
 import Group from './screens/group'
 import HomeScreen from './screens/HomeScreen'
 import Community from './screens/Community'
+import Courses from './screens/Courses';
+import Tracks from './screens/Tracks';
 
 const AppNavigator = createStackNavigator({
   FirstScreen: {
@@ -22,8 +24,8 @@ const AppNavigator = createStackNavigator({
   Login: {
     screen: Login
   },
-  Drawer:{
-    screen:Drawer
+  Drawer: {
+    screen: Drawer
   },
   Qes: {
     screen: Qes
@@ -31,12 +33,12 @@ const AppNavigator = createStackNavigator({
   // TestIndicat:{
   //   screen:TestIndicat
   // },
-  HomeScreen:{
-    screen:HomeScreen
+  HomeScreen: {
+    screen: HomeScreen
   },
- 
-  Group:{
-    screen:Group
+
+  Group: {
+    screen: Group
   },
   ForgetPassword1: {
     screen: ForgetPassword1
@@ -58,7 +60,13 @@ const AppNavigator = createStackNavigator({
   },
   Community: {
     screen: Community
-  }
+  },
+  Tracks: {
+    screen: Tracks
+  },
+  Courses: {
+    screen: Courses
+  },
 }, {
   headerMode: 'none'
 });

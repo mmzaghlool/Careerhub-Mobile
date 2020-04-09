@@ -64,6 +64,7 @@ export default class Profile extends Component {
   async componentDidMount() {
     const user = await this.props.navigation.state.params.user;
     // const { user } = this.props;
+    this.setState({edit:user})
     console.log('==================================');
     console.log('user Profile', user);
     this.setState({ ...user, spinner: false })
@@ -218,7 +219,7 @@ export default class Profile extends Component {
                   size={35}
                   color='#382d4b'
                   onPress={() => {
-                    this.props.navigation.navigate('EditProfile', { user: user })
+                    this.props.navigation.navigate('EditProfile',{user:this.state.edit})
                     // const user = firebase.auth().currentUser;
                     console.log('user', user);
                   }}
@@ -245,10 +246,12 @@ export default class Profile extends Component {
                 style={styles.image}
                 rounded
                 size="xlarge"
-                source={{
-                  uri:
-                    avatar,
-                }}
+                // source={{
+                //   uri:
+                //     avatar,
+                // }}
+                source={require('../../assets/icons/images.jpg')}
+
               />
               <Text style={styles.text}>
                 {firstName + ' ' + lastName}

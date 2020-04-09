@@ -29,6 +29,9 @@ import Posts from './Posts';
 import Skills from './Skills';
 import Achievements from './Achievements';
 import SociaMedia from './SocialMedia';
+import { API_LINK, USER } from '../../common/Constants';
+import Header from '../../common/Header';
+import firebase from 'react-native-firebase';
 
 const { height, width } = Dimensions.get('window')
 
@@ -44,28 +47,55 @@ export default class EditProfile extends Component {
         const user = await this.props.navigation.state.params.user;
         console.log('==================================');
         console.log('Edit Profile', user);
-        this.setState({ ...user, spinner: false })
+
+        const firebaseUser = firebase.auth().currentUser;
+        const uid = firebaseUser._user.uid;
+        console.log('uid', uid);
+        this.setState({ ...user, uid, spinner: false })
     }
 
-    onButtonPress = () => {
+    async onButtonPress() {
+        const { firstName, lastName, phoneNumber, email, uid } = this.state;
+        console.log('firstNameid', firstName);
+        console.log('lastName', lastName);
+        console.log('phoneNumber', phoneNumber);
+        console.log('email', email);
 
+        await fetch(`${API_LINK}/users/updateUser/${uid}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber,
+                email: email,
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log('reg res', res);
+            })
+            .catch(err => {
+                console.log('reg err', err);
+            })
     }
 
     renderButton() {
-        if (this.state.loading) {
+        if (this.state.spinner) {
             return <ActivityIndicator size="large" color="#ffffff" />
         }
         return (
-            <Text
-                style={styles.bottonText}>
+            <Text style={styles.bottonText}>
                 Save
           </Text>
         )
     }
 
     render() {
-        const { firstName, lastName, user, spinner, email, number, password, confirmPassword } = this.state;
-        console.log('user', user);
+        const { firstName, lastName, spinner, phoneNumber, email } = this.state;
+        // console.log('user', user);
         if (spinner) {
             return <Spinner />
         }
@@ -73,6 +103,7 @@ export default class EditProfile extends Component {
             return (
                 <View>
                     <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
+                    {/* <Header backButton title='Edit Profile '/> */}
                     <View style={styles.basicBackground}>
                         <View style={{ flexDirection: 'row' }}>
                             {/* <View style={styles.headerIcon}>
@@ -115,15 +146,14 @@ export default class EditProfile extends Component {
                                 />
                                 <Text style={styles.text2}>Mobile Number</Text>
                                 <TextInput
-                                    value={number}
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
                                     placeholder="Enter phone number"
                                     placeholderTextColor='gray'
-                                    value={number}
-                                    onChangeText={(number) => this.setState({ number })}
+                                    value={phoneNumber}
+                                    onChangeText={(phoneNumber) => this.setState({ phoneNumber })}
                                 />
-                                <Text style={styles.text2}>Password</Text>
+                                {/* <Text style={styles.text2}>Password</Text>
                                 <TextInput
                                     style={styles.inputText}
                                     underlineColorAndroid='gray'
@@ -142,11 +172,11 @@ export default class EditProfile extends Component {
                                     placeholderTextColor='gray'
                                     value={confirmPassword}
                                     onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
-                                />
+                                /> */}
                                 <View style={{ marginTop: height * 0.03 }}>
                                     <TouchableOpacity
-                                        onPress={this.onButtonPress()}
-
+                                        // onPress={this.onButtonPress()}
+                                        onPress={() => this.onButtonPress()}
                                     >
                                         <LinearGradient
                                             start={{ x: 0, y: 0 }}
@@ -276,5 +306,11 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 13,
         marginLeft: width * 0.01,
+    },
+    resetPassword: {
+        color: 'gray',
+        fontSize: 15,
+        marginLeft: width * 0.01,
+        marginTop: height * 0.01
     }
 });

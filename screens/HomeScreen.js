@@ -93,6 +93,7 @@ export default class HomeScreen extends React.Component {
   }
 
   renderListIcons(item) {
+   
     return (
       <TouchableOpacity style={styles.item}
         onPress={() => this.props.navigation.navigate('Group')}
@@ -120,6 +121,7 @@ export default class HomeScreen extends React.Component {
         {/* </View> */}
       </TouchableOpacity>
     );
+  
   }
 
   render() {
@@ -133,6 +135,7 @@ export default class HomeScreen extends React.Component {
         </View>
 
         {/* List */}
+        {this.state.listData != '' && 
         <View style={styles.listContainer}>
           {/* {this.renderListIcons('Machine Learning', 0.75)}
           {this.renderListIcons('Mobile Developing', '.50')}
@@ -144,7 +147,12 @@ export default class HomeScreen extends React.Component {
             keyExtractor={(item, index) => `${index}`}
           />
         </View>
-
+        }
+        {this.state.listData =='' &&
+        <View style={{flex:1,alignSelf:'center',justifyContent:'center'}}>
+        <Text  style={{textAlign:'center',fontWeight:'bold',fontSize:30,alignSelf:'center'}}>No Courses ,, Enroll Now ! </Text>
+        </View>
+      }
         {/* Footer */}
         <View style={styles.footerContainer}>
           <Text style={styles.footerLine}>________</Text>

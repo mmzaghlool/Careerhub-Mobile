@@ -15,7 +15,7 @@ import Style, { iphoneBottomPadding, iphoneTopPadding } from '../common/Style';
 import { updateUser } from '../common/User';
 import { API_LINK } from '../common/Constants';
 
-const { width } = Dimensions.get('window');
+const { width , height } = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -29,15 +29,15 @@ export default class HomeScreen extends React.Component {
     let user = await this.props.navigation.state.params.user;
     this.setState({ user, ...user }, () => this.getData())
     console.log('user Profile', user);
-    
-    
+
+
 
     user = await updateUser();
     if (user) {
-      this.setState({user, ...user})
+      this.setState({ user, ...user })
       console.log('user updated:', user);
     }
-    
+
   }
 
   async getData() {
@@ -51,7 +51,7 @@ export default class HomeScreen extends React.Component {
         const { success, data, message } = res;
 
         if (success) {
-          let listData = []; 
+          let listData = [];
 
           for (const key in data) {
             const element = data[key];
@@ -63,10 +63,10 @@ export default class HomeScreen extends React.Component {
           }
 
           this.setState({ listData })
-          
+
         } else {
           console.log('get groups success = false: ', message);
-          
+
         }
       })
       .catch(err => {
@@ -93,7 +93,7 @@ export default class HomeScreen extends React.Component {
   }
 
   renderListIcons(item) {
-   
+
     return (
       <TouchableOpacity style={styles.item}
         onPress={() => this.props.navigation.navigate('Group')}
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           style={styles.gradient}>
           <View
-            style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginBottom: 5}}
+            style={{ width: '100%', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}
           >
             <Text style={[styles.listIcons, { fontWeight: 'bold', fontSize: 22 }]}>{item.instructor}</Text>
             <Progress
@@ -121,7 +121,7 @@ export default class HomeScreen extends React.Component {
         {/* </View> */}
       </TouchableOpacity>
     );
-  
+
   }
 
   render() {
@@ -135,24 +135,50 @@ export default class HomeScreen extends React.Component {
         </View>
 
         {/* List */}
-        {this.state.listData != '' && 
-        <View style={styles.listContainer}>
-          {/* {this.renderListIcons('Machine Learning', 0.75)}
+        {this.state.listData != '' &&
+          <View style={styles.listContainer}>
+            {/* {this.renderListIcons('Machine Learning', 0.75)}
           {this.renderListIcons('Mobile Developing', '.50')}
           {this.renderListIcons('Web Developing', '.10')} */}
-          <FlatList
-            data={listData}
-            extraData={this.state}
-            renderItem={({ item }) => this.renderListIcons(item)}
-            keyExtractor={(item, index) => `${index}`}
-          />
-        </View>
+            <FlatList
+              data={listData}
+              extraData={this.state}
+              renderItem={({ item }) => this.renderListIcons(item)}
+              keyExtractor={(item, index) => `${index}`}
+            />
+          </View>
         }
-        {this.state.listData =='' &&
-        <View style={{flex:1,alignSelf:'center',justifyContent:'center'}}>
-        <Text  style={{textAlign:'center',fontWeight:'bold',fontSize:30,alignSelf:'center'}}>No Courses ,, Enroll Now ! </Text>
-        </View>
-      }
+        {this.state.listData == '' &&
+          <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, alignSelf: 'center' }}>No Courses .. Enroll Now ! </Text>
+            <View style={{flexDirection:'column',alignSelf:'center'}}>
+              <TouchableOpacity style={{}}>
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  colors={['#5653e2', '#795EE3', '#ae71f2']}
+                  style={styles.linearGradient}>
+                  <Text
+                    style={styles.bottonText}>
+                    Go To Personality Test
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity  style={{}}>
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  colors={['#5653e2', '#795EE3', '#ae71f2']}
+                  style={styles.linearGradient}>
+                  <Text
+                    style={styles.bottonText}>
+                    Go To Courses
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          </View>
+        }
         {/* Footer */}
         <View style={styles.footerContainer}>
           <Text style={styles.footerLine}>________</Text>
@@ -240,5 +266,21 @@ const styles = StyleSheet.create({
   },
   styleText: {
     fontSize: 15,
+  },
+
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    width: width * 0.78,
+    height: height * 0.055,
+    marginTop:40,
+    padding:20
+    
+  },
+  bottonText: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

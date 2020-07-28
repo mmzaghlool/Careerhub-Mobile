@@ -16,6 +16,7 @@
     "deepmerge": "^4.0.0",
     "hoist-non-react-statics": "^3.3.0",
     "lodash": "^4.17.15",
+    "moment": "^2.27.0",
     "npm-install-missing": "^0.1.4",
     "opencollective-postinstall": "^2.0.2",
     "prop-types": "^15.7.2",

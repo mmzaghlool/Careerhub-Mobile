@@ -16,8 +16,17 @@ import HomeScreen from './screens/HomeScreen'
 import Community from './screens/Community'
 import Courses from './screens/Courses';
 import Tracks from './screens/Tracks';
+import ChatList from './screens/chats/chatList'
 
+import Chat from './screens/chats/chat'
 const AppNavigator = createStackNavigator({
+
+  ChatList: {
+    screen: ChatList
+  },
+  Chat: {
+    screen: Chat
+  },
   FirstScreen: {
     screen: FirstScreen
   },

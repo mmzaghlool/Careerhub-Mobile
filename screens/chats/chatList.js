@@ -60,7 +60,8 @@ export default class HomeScreen extends React.Component {
                     let x = [];
                     x.push({'uid':uid , ...element})
                     console.log('x',x);
-                    this.setState({x})
+                    this.setState({list:x})
+                    console.log(this.state.list);
                                 }
             }
 
@@ -75,7 +76,7 @@ export default class HomeScreen extends React.Component {
   renderItems = ({ item, index }) => (
 
 
-    <TouchableOpacity style={{flexDirection:'row'}} onPress={() => this.props.navigation.navigate('Chat', { roomkey:item.roomKey })}>
+    <TouchableOpacity style={{flexDirection:'row'}} onPress={() => this.props.navigation.navigate('Chat', { roomkey:item.roomKey  ,rec :item.uid })}>
         <Image source={{ uri: item.avatar }} style={{
                             borderRadius: 50,
                             width: 50,
@@ -99,7 +100,7 @@ export default class HomeScreen extends React.Component {
 
       <View style={styles.container}>
            <FlatList
-              data={this.state.x}
+              data={this.state.list}
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={this.FlatListItemSeparator}
               disableVirtualization={true}

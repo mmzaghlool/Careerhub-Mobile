@@ -36,7 +36,9 @@ export default class HomeScreen extends React.Component {
 
     async componentDidMount() {
         const x = await this.props.navigation.state.params.roomkey;
-        console.log(x);
+        const y = await this.props.navigation.state.params.rec;
+
+        console.log('sdsdsddsdsdsds',y);
         firebase.database().ref(`/messages/${x}`).on('value', snap => {
             let x = [];
             const data = snap.val();
@@ -99,6 +101,8 @@ export default class HomeScreen extends React.Component {
                         onChangeText={(message) => this.setState({ message })}
                     />
                     <TouchableOpacity style={{ backgroundColor: 'red' }} onPress={() => {
+                        console.log('one',firebase.auth().currentUser.uid);
+                        console.log('two',this.props.navigation.state.params.rec);
                         fetch(`${API_LINK}/chat/sendMessage`, {
                             method: "POST",
                             headers: {
@@ -106,9 +110,9 @@ export default class HomeScreen extends React.Component {
                             },
                             body: JSON.stringify({
                                 senderUid: firebase.auth().currentUser.uid,
-                                receiverUid: this.props.navigation.state.params.roomkey,
+                                receiverUid: this.props.navigation.state.params.rec,
                                 message:this.state.message,
-                                timestamp: moment(),
+                                timestamp: moment().unix()
                             }),
                         })
                             .then((res) => res.json())

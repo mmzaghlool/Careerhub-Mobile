@@ -109,47 +109,72 @@ export default class Qes extends React.Component {
               disableVirtualization={true}
               renderItem={this.renderItems}
             />
-            
+
           </View>
           <TouchableOpacity style={{ marginBottom: 10, flex: .05, borderRadius: 30, marginTop: 9, width: '70%', marginLeft: 52, flexDirection: 'column' }}
-              onPress={() => {
-                let res = {
-                  naturalist: 0,
-                  musical: 0,
-                  logical: 0,
-                  visual: 0,
-                  interpersonal: 0,
-                  kinesthetic: 0,
-                  verbal:0
+            onPress={() => {
+              let res = {
+                naturalist: 0,
+                musical: 0,
+                logical: 0,
+                visual: 0,
+                interpersonal: 0,
+                kinesthetic: 0,
+                verbal: 0
 
-                }
+              }
 
-                for (let i = 0; i < this.state.data.length; i++) {
-                  const element = this.state.data[i];
-                  console.log('element', element)
-                  let strength = res[element.strength];
+              for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                console.log('element', element)
+                let strength = res[element.strength];
 
 
-                  if (element.answer == 'Never') { strength += 0 }
-                  else if (element.answer == 'Rarely') { strength += .25 }
-                  else if (element.answer == 'Often') { strength += .75 }
-                  else if (element.answer == 'Always') { strength += 1 }
+                if (element.answer == 'Never') { strength += 0 }
+                else if (element.answer == 'Rarely') { strength += .25 }
+                else if (element.answer == 'Often') { strength += .75 }
+                else if (element.answer == 'Always') { strength += 1 }
 
-                  console.log('strength', strength)
-                  res[element.strength] = strength
+                console.log('strength', strength)
+                res[element.strength] = strength
+                let x =firebase.auth().currentUser.uid
+                // await fetch(`${API_LINK}/users/answersOfQuestions/${x}`, {
+                //   method: "POST",
+                //   headers: {
+                //     'Content-Type': "application/json"
+                //   },
+                //   body: JSON.stringify({
+                //   answers: {
+                //     Naturalist : res.naturalist,
+                //     Musical:res.musical,
+                //     Logical:res.logical,
+                //     Interpersonal:res.interpersonal,
+                //     Kinesthetic:res.kinesthetic,
+                //     Verbal:res.verbal,
+                //     Visual:res.visual
+                //   }
+                //   })
+                // }).then(res => res.json())
+                //   .then(res => {
 
-                }
-                console.log('res', res)
-              }}
-            >
-              <LinearGradient
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            colors={['#5653e2', '#795EE3', '#862deb']}
-                            style={styles.linearGradient2}>
-                            <Text style={{ color: '#ffffff', fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 9 }}>Next</Text>
-                        </LinearGradient>
-            </TouchableOpacity>
+                //     console.log('reg res', res);
+
+                //   })
+                //   .catch(err => {
+                //     console.log('reg err', err);
+
+                //   })
+              }
+            }}
+          >
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={['#5653e2', '#795EE3', '#862deb']}
+              style={styles.linearGradient2}>
+              <Text style={{ color: '#ffffff', fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 9 }}>Next</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </LinearGradient>
       </View>
 

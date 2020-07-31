@@ -1,25 +1,53 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image ,FlatList} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { ProfileName } from './ProfileName';
+import { API_LINK } from '../../common/Constants';
+import Header from '../../common/Header';
 
 import Style from '../../common/Style';
+import Spinner from '../../common/Loading';
 
 export default class Post extends Component {
+    constructor() {
+        super()
+        this.state = {
+         
+          spinner: true,
+        }
+      }
 
-    render() {
-        return (
-            <View style={[{
-                margin: 7,
-                padding: 10,
-                backgroundColor: 'white',
-                borderRadius: 12
-            }, Style.elevation]} >
+    async componentDidMount() {
+       await fetch(`${API_LINK}/community/123`)
+          .then(res => res.json())
+          .then(async res => {
+            console.log('resresres', res);
+            this.setState({post:res.message}, () => console.log(this.state.post))
+            if (res.success) {
+                // for (const uid in res.data) {
+                //     if (res.data.hasOwnProperty(uid)) {
+                //         const element = res.data[uid];
+                //         let x = [];
+                //         x.push({...element})
+                //         console.log(x);
+                //         this.setState({list:x})
+                //                     }
+                // }
+               await this.setState({post:res.message}, () => this.setState({spinner:false}))
+
+    
+            }
+
+    
+          })
+          .catch(err => { alert(err)})
+      }
+     
+      renderItems = ({ item, index }) => (
+<View style={{marginBottom:10}}  >
 
                 <ProfileName name={"Mostafa Mahmoud"} time={"2hrs ago"} />
-                <Text style={{ margin: 7 }}>
-                    I found a lot of explanations to resolve this, but nothing seems to work for me. Maybe I'm missing something here, let me know if you can help !
-                </Text>
+        <Text style={{ margin: 7 }}>{item}</Text>
 
                 <Image
                     style={{ marginTop: 7, width: '100%', flexShrink: 1 }}
@@ -32,7 +60,32 @@ export default class Post extends Component {
                     <Icon icon={'comment-text-multiple-outline'} onPress={() => this.props.openComments()} num={50} />
                 </View>
             </View>
+      )
+    render() {
+        const { spinner } = this.state;
+    if (spinner) {
+      return <Spinner />
+    } else {
+        return (
+       
+      
+        <View style={[{
+                margin: 7,
+                padding: 10,
+                backgroundColor: 'white',
+                borderRadius: 12
+            }, Style.elevation]}>
+           <FlatList
+              data={this.state.post}
+              keyExtractor={(item, index) => index.toString()}
+              ItemSeparatorComponent={this.FlatListItemSeparator}
+              disableVirtualization={true}
+              renderItem={this.renderItems}
+            />
+            </View>
+          
         );
+    }
     }
 }
 

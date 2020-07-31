@@ -125,7 +125,7 @@ export default class HomeScreen extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
             }}>
-            {this.renderFooterIcon('email', 'Messages', () => { })}
+            {this.renderFooterIcon('email', 'Messages', () => { this.props.navigation.navigate('ChatList', { user: this.state.totuser })})}
             {this.renderFooterIcon('account', 'Profile', () => { this.props.navigation.navigate('Profile', { user: this.state.totuser }) })}
             {this.renderFooterIcon('bell-ring', 'Notifications', () => {this.props.navigation.navigate('Tracks', { user: this.state.totuser }) })}
           </View>

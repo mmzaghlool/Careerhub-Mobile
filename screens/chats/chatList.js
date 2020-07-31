@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import firebase from 'react-native-firebase';
 import { API_LINK} from '../../common/Constants';
 import { set, forIn } from 'lodash';
+import Header from '../../common/Header';
 
 const { width } = Dimensions.get('window');
 const id = firebase.auth().currentUser.uid
@@ -54,12 +55,11 @@ export default class HomeScreen extends React.Component {
         if (res.success) {
             for (const uid in res.data) {
                 if (res.data.hasOwnProperty(uid)) {
-                    console.log(res.data.hasOwnProperty(name));
+                    console.log(res.data.hasOwnProperty(uid));
                     const element = res.data[uid];
                     console.log('ss',element);
                     let x = [];
                     x.push({'uid':uid , ...element})
-                    console.log('x',x);
                     this.setState({list:x})
                     console.log(this.state.list);
                                 }
@@ -69,7 +69,7 @@ export default class HomeScreen extends React.Component {
         }
 
       })
-      .catch(err => { })
+      .catch(err => { alert(err)})
   }
  
 
@@ -83,7 +83,7 @@ export default class HomeScreen extends React.Component {
                             height: 50,
                             marginHorizontal: 5
                         }} />
-      <Text style={{ marginTop: 8, fontSize: 17, fontWeight: 'bold', marginBottom: 20, marginLeft: 9 }}>{item.name}</Text>
+      <Text style={{ marginTop: 8, fontSize: 17, fontWeight: 'bold', marginBottom: 20, marginLeft: 15 }}>{item.name}</Text>
                     
       
      
@@ -99,6 +99,8 @@ export default class HomeScreen extends React.Component {
     return (
 
       <View style={styles.container}>
+        <Header title='Chats' backButton />
+        <View style={{padding:20}}>
            <FlatList
               data={this.state.list}
               keyExtractor={(item, index) => index.toString()}
@@ -106,7 +108,7 @@ export default class HomeScreen extends React.Component {
               disableVirtualization={true}
               renderItem={this.renderItems}
             />
-            
+            </View>
           
       </View>
     );

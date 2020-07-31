@@ -21,14 +21,14 @@ import ChatList from './screens/chats/chatList'
 import Chat from './screens/chats/chat'
 const AppNavigator = createStackNavigator({
 
-  ChatList: {
-    screen: ChatList
+  FirstScreen: {
+    screen: FirstScreen
   },
   Chat: {
     screen: Chat
   },
-  FirstScreen: {
-    screen: FirstScreen
+  ChatList: {
+    screen: ChatList
   },
   Login: {
     screen: Login

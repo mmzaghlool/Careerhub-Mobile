@@ -17,6 +17,9 @@ import { API_LINK } from '../../common/Constants';
 import { set, forIn } from 'lodash';
 import moment from 'moment';
 import { element } from 'prop-types';
+
+import Header from '../../common/Header';
+
 const list = [
     { color: 20, size: 'XXL' },
     { color: 2, size: 'XL' },
@@ -83,6 +86,7 @@ export default class HomeScreen extends React.Component {
         return (
 
             <View style={styles.container}>
+                <Header  backButton/>
                 <FlatList
                     data={this.state.y}
                     keyExtractor={(item, index) => index.toString()}
@@ -93,14 +97,13 @@ export default class HomeScreen extends React.Component {
 
                 <View style={{ flexDirection: 'row' }}>
                     <TextInput
-                        style={styles.inputText}
-                        underlineColorAndroid='gray'
-                        placeholder="Enter Email"
+                        style={{width:'90%'}}
+                        placeholder="Enter message"
                         placeholderTextColor='gray'
                         value={this.state.message}
                         onChangeText={(message) => this.setState({ message })}
                     />
-                    <TouchableOpacity style={{ backgroundColor: 'red' }} onPress={() => {
+                    <TouchableOpacity  style={{width:'10%',justifyContent:'center'}} onPress={() => {
                         console.log('one',firebase.auth().currentUser.uid);
                         console.log('two',this.props.navigation.state.params.rec);
                         fetch(`${API_LINK}/chat/sendMessage`, {

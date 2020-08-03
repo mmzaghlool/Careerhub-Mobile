@@ -10,6 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 const { height, width } = Dimensions.get('window')
 
+import Style from '../common/Style'
 
 export default class EnterToTest extends React.Component {
   constructor(props) {
@@ -21,16 +22,16 @@ export default class EnterToTest extends React.Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={[{flex:1},Style.container]}>
         <LinearGradient
           colors={['#5653e2', '#795EE3', '#ae71f2']}
           style={styles.linearGradient}>
-          <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 27, marginTop: 15, color: 'white', marginTop: 20 }}>PERSONALITY TEST</Text>
+          <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 27, marginTop: 15, color: 'white' }}>PERSONALITY TEST</Text>
 
           <View style={styles.dynamicScreen}>
 
 
-            <View style={{ padding: 0, marginTop: 38, flexDirection: 'column' }}>
+            <View style={{ padding: 0, marginTop: 28, flexDirection: 'column' }}>
               <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>We can suggest a tips and a suitable</Text>
               <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>career for you based on some</Text>
               <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>questions which you are going to</Text>
@@ -43,7 +44,7 @@ export default class EnterToTest extends React.Component {
             </View>
 
           </View>
-        <TouchableOpacity style={{ flex: .03, borderRadius: 30, marginTop: 15, width: width*.7, marginLeft: 45, flexDirection: 'column' }}
+        <TouchableOpacity style={{ flex: .06, borderRadius: 30, marginTop: 8, width: width*.7, marginLeft: 45, flexDirection: 'column' }}
           onPress={() => { this.props.navigation.navigate('Qes') }}>
           <LinearGradient
             start={{ x: 0, y: 0 }}

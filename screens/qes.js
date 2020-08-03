@@ -13,6 +13,7 @@ import firebase from 'react-native-firebase';
 import { API_LINK } from '../common/Constants';
 
 import LinearGradient from 'react-native-linear-gradient';
+import Style from '../common/Style'
 
 
 const API = 'https://lit-plateau-32534.herokuapp.com';
@@ -96,7 +97,7 @@ export default class Qes extends React.Component {
   render() {
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={[{ flex: 1 },Style.container]}>
         <LinearGradient
           colors={['#5653e2', '#795EE3', '#ae71f2']}
           style={styles.linearGradient}>

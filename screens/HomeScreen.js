@@ -12,7 +12,7 @@ import Progress from 'react-native-progress/Circle';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { API_LINK, USER } from '../common/Constants';
-
+import Style from '../common/Style'
 const { width } = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
     const { listData, firstName, lastName } = this.state;
     return (
 
-      <View style={styles.container}>
+      <View style={[styles.container,Style.container]}>
         {/* Header */}
         <View style={styles.textContainer}>
           <Text style={styles.headerText1}>Hey  {firstName + ' ' + lastName}</Text>

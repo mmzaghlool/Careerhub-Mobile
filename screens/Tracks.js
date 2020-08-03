@@ -12,6 +12,7 @@ import Spinner from '../common/Loading';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Rating } from 'react-native-elements';
 import Header from '../common/Header';
+import Style from '../common/Style'
 
 const { height, width } = Dimensions.get('window')
 
@@ -138,7 +139,7 @@ export default class Tracks extends Component {
             return <Spinner />
         } else {
             return (
-                <View style={{ marginBottom: 80 }}>
+                <View style={[{ marginBottom: 80 },Style.container]}>
                     <Header backButton title="Tracks" />
                     <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
                     <View style={{ padding: 20 }}>

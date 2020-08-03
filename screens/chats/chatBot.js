@@ -20,9 +20,9 @@ import { element, object } from 'prop-types';
 
 import Header from '../../common/Header';
 
+import Style from '../../common/Style'
 
 const { width } = Dimensions.get('window');
-const id = firebase.auth().currentUser.uid
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -48,7 +48,11 @@ export default class HomeScreen extends React.Component {
 
         <View style={{  }}>
 
-            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>{item.answer}</Text>
+            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Answer: {item.answer}</Text>
+            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Link: {item.shareLink}</Text>
+            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Vote: {item.vote}</Text>
+
+
 
 
 
@@ -63,7 +67,7 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
 
-            <View style={styles.container}>
+            <View style={[styles.container,Style.container]}>
                 <Header backButton />
                 <FlatList
                     data={this.state.answer}
@@ -82,6 +86,7 @@ export default class HomeScreen extends React.Component {
                         onChangeText={(message) => this.setState({ message })}
                     />
                     <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }} onPress={() => {
+                        this.setState({answer:this.state.message})
                         let ans =[]
                          fetch(`${API_LINK}/chatbot/${this.state.message}`)
                             .then(res => res.json())
@@ -89,7 +94,7 @@ export default class HomeScreen extends React.Component {
                                 console.log('resresres', res);
                                 if (res.success) {
                                     let x = Object.values(res)
-                                  this.setState({answer:x} , () => console.log('haha',x))
+                                  this.setState({answer:x} , () => console.log('haha',this.state.answer))
                                 }
 
                             })

@@ -14,6 +14,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Rating, SearchBar } from 'react-native-elements';
 import Header from '../common/Header';
 import {API_LINK} from '../common/Constants';
+import Style from '../common/Style'
 
 const { height, width } = Dimensions.get('window')
 
@@ -108,7 +109,7 @@ export default class Courses extends Component {
             return <Spinner />
         } else {
             return (
-                <View>
+                <View style={Style.container}>
                     <ScrollView>
                         <Header backButton title={category} />
                         <View style={{ padding: 20 }}>

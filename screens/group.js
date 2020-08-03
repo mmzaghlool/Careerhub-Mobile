@@ -17,6 +17,7 @@ import * as Progress from 'react-native-progress';
 const { height, width } = Dimensions.get('window')
 import CheckBox from 'react-native-check-box'
 
+import Style from '../common/Style'
 
 const API = 'https://lit-plateau-32534.herokuapp.com';
 
@@ -28,7 +29,6 @@ export default class Group extends React.Component {
                 { id: 0, level: 'LEVEL ONE', checked: false },
                 { id: 1, level: 'LEVEL TWO', checked: false },
                 { id: 2, level: 'LEVEL THREE', checked: false },
-                    { id: 3, level: 'LEVEL FOUR', checked: false }
             ],
             j:0,
             x:0,
@@ -92,7 +92,7 @@ export default class Group extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1, alignItems: 'center', marginTop: 30, justifyContent: 'space-between' }}>
+            <View style={[{ flex: 1, alignItems: 'center', marginTop: 30, justifyContent: 'space-between' },Style.container]}>
                  
                 <TouchableOpacity style={{ flex: .18, }}>
                 <LinearGradient

@@ -17,6 +17,7 @@ import { API_LINK } from '../../common/Constants';
 import { set, forIn } from 'lodash';
 import moment from 'moment';
 import { element } from 'prop-types';
+import Style from '../../common/Style'
 
 import Header from '../../common/Header';
 
@@ -26,7 +27,6 @@ const list = [
     { color: 100, size: 'M' }
 ]
 const { width } = Dimensions.get('window');
-const id = firebase.auth().currentUser.uid
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -85,7 +85,7 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
 
-            <View style={styles.container}>
+            <View style={[styles.container,Style.container]}>
                 <Header  backButton/>
                 <FlatList
                     data={this.state.y}

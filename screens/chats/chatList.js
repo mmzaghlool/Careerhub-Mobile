@@ -15,9 +15,9 @@ import firebase from 'react-native-firebase';
 import { API_LINK} from '../../common/Constants';
 import { set, forIn } from 'lodash';
 import Header from '../../common/Header';
+import Style from '../../common/Style'
 
 const { width } = Dimensions.get('window');
-const id = firebase.auth().currentUser.uid
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -98,7 +98,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
 
-      <View style={styles.container}>
+      <View style={[styles.container,Style.container]}>
         <Header title='Chats' backButton />
         <View style={{padding:20}}>
            <FlatList

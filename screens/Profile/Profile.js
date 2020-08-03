@@ -33,6 +33,7 @@ import Posts from './Posts';
 import Skills from './Skills';
 import Achievements from './Achievements';
 import SociaMedia from './SocialMedia';
+import Style from '../../common/Style'
 
 const { height, width } = Dimensions.get('window')
 
@@ -188,7 +189,7 @@ export default class Profile extends Component {
     else {
       return (
         <ScrollView>
-          <View style={styles.screen}>
+          <View style={[styles.screen,Style.container]}>
             {/* visitor header */}
             {/* <View style={styles.header}>
               <View style={styles.headerIcon}>

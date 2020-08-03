@@ -22,11 +22,14 @@ import ChatBot from './screens/chats/chatBot'
 import Chat from './screens/chats/chat'
 const AppNavigator = createStackNavigator({
 
+  ChatBot: {
+    screen: ChatBot
+  },
   FirstScreen: {
     screen: FirstScreen
   },
-  ChatBot: {
-    screen: ChatBot
+  HomeScreen: {
+    screen: HomeScreen
   },
   Chat: {
     screen: Chat
@@ -46,9 +49,6 @@ const AppNavigator = createStackNavigator({
   // TestIndicat:{
   //   screen:TestIndicat
   // },
-  HomeScreen: {
-    screen: HomeScreen
-  },
 
   Group: {
     screen: Group

@@ -16,6 +16,7 @@ import Spinner from '../../../common/Loading';
 
 import firebase from "react-native-firebase";
 import { API_LINK, USER } from '../../../common/Constants';
+import Style from '../../../common/Style'
 
 const { height, width } = Dimensions.get('window')
 
@@ -110,7 +111,7 @@ export default class Login extends Component {
       return <Spinner />
     } else {
       return (
-        <View>
+        <View style={Style.container}>
           <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
           <View style={styles.basicBackground}>
 

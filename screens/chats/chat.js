@@ -21,19 +21,13 @@ import Style from '../../common/Style'
 
 import Header from '../../common/Header';
 
-const list = [
-    { color: 20, size: 'XXL' },
-    { color: 2, size: 'XL' },
-    { color: 100, size: 'M' }
-]
+
 const { width } = Dimensions.get('window');
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            y: [
-                40, 33, 4
-            ]
+          done:0
         }
     }
 
@@ -68,7 +62,7 @@ export default class HomeScreen extends React.Component {
     renderItems = ({ item, index }) => (
 
 
-        <View style={{ alignItems: firebase.auth().currentUser.uid == item.senderUid ? 'flex-end' : 'flex-start' }}>
+        <View style={{ alignItems: firebase.auth().currentUser.uid == item.senderUid ? 'flex-end' : 'flex-start' ,padding:10}}>
 
             <Text style={{ marginTop: 8, fontSize: 17, fontWeight: 'bold', marginBottom: 20, marginLeft: 9 }}>{item.message}</Text>
 
@@ -83,6 +77,8 @@ export default class HomeScreen extends React.Component {
 
 
     render() {
+        const {done} =this.state;
+        
         return (
 
             <View style={[styles.container,Style.container]}>
@@ -92,7 +88,13 @@ export default class HomeScreen extends React.Component {
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={this.FlatListItemSeparator}
                     disableVirtualization={true}
+                    extraData={this.state}
                     renderItem={this.renderItems}
+                    ref={ref => this.list = ref}
+                    onContentSizeChange={() => {
+                        if (done == 0) this.setState({ done: 1 })
+                        else if (done == 1) { this.list.scrollToEnd(); }
+                    }}
                 />
 
                 <View style={{ flexDirection: 'row' }}>
@@ -125,6 +127,7 @@ export default class HomeScreen extends React.Component {
                             .catch((error) => {
                               
                             });
+                            this.setState({message:''})
                     }}>
                         <Text>SEND</Text>
                     </TouchableOpacity>
@@ -206,3 +209,67 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
 });
+
+
+{/* <FlatList
+                    data={messagesValues}
+                    extraData={this.state}
+                    style={{ padding: 5 }}
+                    renderItem={({ item, index }) => <RenderMessage item={item} timestamp={messagesKeys[index]} user={user} copy={() => {this.refs.toast.show(`${strings.copy}`, DURATION.LENGTH_LONG)}}
+                        receiverAvatar={avatar} index={index} openImage={(uri) => this.setState({ imageSrc: { uri }, modal: true })} />}
+                    keyExtractor={(item, index) => `${index}`}
+                    ref={ref => this.list = ref}
+                    // initialScrollIndex={messagesValues.length - 1}
+                    onContentSizeChange={() => {
+                        console.log("scroll", done)
+                        // messages loaded
+                        if (done == 0) this.setState({ done: 1 })
+                        // scroll chat to end initially
+                        else if (done == 1) { this.list.scrollToEnd(); this.setState({ done: 2, moreLoading: false }) }
+                        // loading more messages done
+                        else if (done == 2 && moreLoading) {
+                            let index;
+                            if (messagesKeys.length > 19) {
+                                index = 19;
+
+                                console.log('1 index', index)
+                            } else if (messagesKeys.length > 1) {
+                                index = messagesKeys.length - 1
+                                console.log('2 index', index)
+                            } else {
+                                index = 0
+                                console.log('3 index', index)
+                            }
+                            if(index !== 0)
+                                this.list.scrollToIndex({ index, animated: false })
+                            this.setState({ moreLoading: false })
+                        }
+                        // New message received
+                        else if (done == 2 && newMessage) {
+                            console.log('3 end')
+
+                            this.list.scrollToEnd();
+                            this.setState({ newMessage: false })
+                        }
+
+                    }}
+                    onScrollToIndexFailed={info => {
+                        const wait = new Promise(resolve => setTimeout(resolve, 500));
+                        wait.then(() => {
+                            this.list.scrollToIndex({ index: messagesKeys.length > 19 ? 19 : messagesKeys.length - 1, animated: false });
+                        });
+                    }}
+                    onScroll={
+                        (event) =>
+                            this.onContentOffsetChanged(event.nativeEvent.contentOffset.y)
+                    }
+                    ListHeaderComponent={() => (
+                        <View style={{ alignSelf: 'center', marginTop: 10 }}>
+                            {moreLoading &&
+                                <ActivityIndicator
+                                    size={'small'}
+                                />
+                            }
+                        </View>
+                    )}
+                /> */}

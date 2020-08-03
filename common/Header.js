@@ -26,7 +26,7 @@ export default class Header extends Component {
         <StatusBar backgroundColor="#795EE3" barStyle='dark-content' />
         {/* back button */}
         {backButton && (
-          <TouchableOpacity style={{ flex: 1 }} onPress={onBackPress? onBackPress: () => Actions.pop()}>
+          <TouchableOpacity style={{ flex: 1 }} onPress={onBackPress? onBackPress: Actions.pop()}>
             <MaterialIcons
               name={icon? icon: 'arrow-back'}
               size={25}

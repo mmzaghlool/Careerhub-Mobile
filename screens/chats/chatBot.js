@@ -7,7 +7,8 @@ import {
     Dimensions,
     TouchableOpacity,
     Image,
-    TextInput
+    TextInput,
+    ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Progress from 'react-native-progress/Circle';
@@ -27,82 +28,55 @@ export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            answer:
-            {
-                hazem:'hazem'
-            }
+            done: 0,
+          
         }
     }
-
-    async componentDidMount() {
-
-
-
-
-
-    }
-
-
-    renderItems = ({ item, index }) => (
-
-
-        <View style={{  }}>
-
-            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Answer: {item.answer}</Text>
-            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Link: {item.shareLink}</Text>
-            <Text style={{ marginTop: 8, fontSize: 12, fontWeight: 'bold'}}>Vote: {item.vote}</Text>
-
-
-
-
-
-
-        </View>
-
-    )
-
-
-
 
     render() {
         return (
 
-            <View style={[styles.container,Style.container]}>
-                <Header backButton />
-                <FlatList
-                    data={this.state.answer}
-                    keyExtractor={(item, index) => index.toString()}
-                    ItemSeparatorComponent={this.FlatListItemSeparator}
-                    disableVirtualization={true}
-                    renderItem={this.renderItems}
-                />
+            <View style={[{},styles.container, Style.container]}>
+                <View style={{flex:1}}>
+                <Header backButton title={'Chat-Bot'}/>
+                {this.state.answer && 
+                <ScrollView style={{padding:20,}}>
+                    <View style={{marginBottom:15,  alignItems: 'center', alignSelf: 'flex-end', backgroundColor:'#e6e6e6',padding:13,borderRadius:20,alignContent:'center'}}>
+                    <Text style={{  fontSize: 13, fontWeight: 'bold',textAlign:'right' }}>{this.state.question}?</Text>
+                    </View>
+                    <View style={{alignItems: 'center', alignSelf: 'flex-start', backgroundColor:'#b7a8f0',padding:13,borderRadius:20 ,alignItems:'center'}}>
+                    <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Answer: {this.state.answer}</Text>
+                    <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Link: {this.state.shareLink}</Text>
+                    <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Vote: {this.state.vote}</Text>
+                    </View>
 
-                <View style={{ flexDirection: 'row' }}>
+                </ScrollView>
+}
+                <View style={{ flexDirection: 'row',position: 'absolute', bottom: 0,backgroundColor:'#e6e6e6'}}>
                     <TextInput
                         style={{ width: '90%' }}
                         placeholder="Enter message"
                         placeholderTextColor='gray'
                         value={this.state.message}
                         onChangeText={(message) => this.setState({ message })}
+
                     />
                     <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }} onPress={() => {
-                        this.setState({answer:this.state.message})
-                        let ans =[]
-                         fetch(`${API_LINK}/chatbot/${this.state.message}`)
+                        fetch(`${API_LINK}/chatbot/${this.state.message}`)
                             .then(res => res.json())
                             .then(async res => {
-                                console.log('resresres', res);
+                                console.log('resresres', res.data);
                                 if (res.success) {
-                                    let x = Object.values(res)
-                                  this.setState({answer:x} , () => console.log('haha',this.state.answer))
+                                    this.setState({ answer: res.data.answer , vote:res.data.vote , question:res.data.question ,shareLink:res.data.shareLink })
                                 }
 
                             })
+                            this.setState({message:''})
                     }}>
                         <Text>SEND</Text>
                     </TouchableOpacity>
                 </View>
-
+                </View>
             </View>
         );
     }

@@ -120,7 +120,7 @@ export default class Group extends React.Component {
                     </LinearGradient>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
+                <TouchableOpacity onPress={ () => this.props.navigation.goBack()} style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
                 <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           //colors={['#0e1f35', '#21455c']}

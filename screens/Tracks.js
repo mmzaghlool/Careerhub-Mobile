@@ -140,7 +140,7 @@ export default class Tracks extends Component {
         } else {
             return (
                 <View style={[{ marginBottom: 80 },Style.container]}>
-                    <Header backButton title="Tracks" />
+                    <Header backButton title="Tracks" onBackPress={ () =>this.props.navigation.goBack()}/>
                     <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
                     <View style={{ padding: 20 }}>
 

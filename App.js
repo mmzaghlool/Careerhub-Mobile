@@ -17,12 +17,16 @@ import Community from './screens/Community'
 import Courses from './screens/Courses';
 import Tracks from './screens/Tracks';
 import ChatList from './screens/chats/chatList'
+import ChatBot from './screens/chats/chatBot'
 
 import Chat from './screens/chats/chat'
 const AppNavigator = createStackNavigator({
 
   FirstScreen: {
     screen: FirstScreen
+  },
+  ChatBot: {
+    screen: ChatBot
   },
   Chat: {
     screen: Chat

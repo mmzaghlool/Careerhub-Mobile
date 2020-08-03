@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import TestButton from '../components/testbutton';
 import firebase from 'react-native-firebase';
+import { API_LINK } from '../common/Constants';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -112,7 +113,7 @@ export default class Qes extends React.Component {
 
           </View>
           <TouchableOpacity style={{ marginBottom: 10, flex: .05, borderRadius: 30, marginTop: 9, width: '70%', marginLeft: 52, flexDirection: 'column' }}
-            onPress={() => {
+            onPress={ async() => {
               let res = {
                 naturalist: 0,
                 musical: 0,
@@ -126,7 +127,7 @@ export default class Qes extends React.Component {
 
               for (let i = 0; i < this.state.data.length; i++) {
                 const element = this.state.data[i];
-                console.log('element', element)
+                // console.log('element', element)
                 let strength = res[element.strength];
 
 
@@ -135,36 +136,38 @@ export default class Qes extends React.Component {
                 else if (element.answer == 'Often') { strength += .75 }
                 else if (element.answer == 'Always') { strength += 1 }
 
-                console.log('strength', strength)
+                // console.log('strength', strength)
                 res[element.strength] = strength
-                let x =firebase.auth().currentUser.uid
-                // await fetch(`${API_LINK}/users/answersOfQuestions/${x}`, {
-                //   method: "POST",
-                //   headers: {
-                //     'Content-Type': "application/json"
-                //   },
-                //   body: JSON.stringify({
-                //   answers: {
-                //     Naturalist : res.naturalist,
-                //     Musical:res.musical,
-                //     Logical:res.logical,
-                //     Interpersonal:res.interpersonal,
-                //     Kinesthetic:res.kinesthetic,
-                //     Verbal:res.verbal,
-                //     Visual:res.visual
-                //   }
-                //   })
-                // }).then(res => res.json())
-                //   .then(res => {
-
-                //     console.log('reg res', res);
-
-                //   })
-                //   .catch(err => {
-                //     console.log('reg err', err);
-
-                //   })
+                
               }
+              let x =firebase.auth().currentUser.uid
+
+              await fetch(`${API_LINK}/users/answersOfQuestions/${x}`, {
+                method: "POST",
+                headers: {
+                  'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                answers: {
+                  Naturalist : res.naturalist,
+                  Musical:res.musical,
+                  Logical:res.logical,
+                  Interpersonal:res.interpersonal,
+                  Kinesthetic:res.kinesthetic,
+                  Verbal:res.verbal,
+                  Visual:res.visual
+                }
+                })
+              }).then(res => res.json())
+                .then(res => {
+
+                  console.log('reg res', res);
+
+                })
+                .catch(err => {
+                  console.log('reg err', err);
+
+                })
             }}
           >
             <LinearGradient

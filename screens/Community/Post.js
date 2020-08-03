@@ -22,7 +22,6 @@ export default class Post extends Component {
           .then(res => res.json())
           .then(async res => {
             console.log('resresres', res);
-            this.setState({post:res.message}, () => console.log(this.state.post))
             if (res.success) {
                 // for (const uid in res.data) {
                 //     if (res.data.hasOwnProperty(uid)) {
@@ -33,7 +32,14 @@ export default class Post extends Component {
                 //         this.setState({list:x})
                 //                     }
                 // }
-               await this.setState({post:res.message}, () => this.setState({spinner:false}))
+
+
+                let x = JSON.parse(res.data)
+                let y = x.hits.hits
+                console.log(y[0]._source);
+
+
+                await this.setState({post:res.data}, () => this.setState({spinner:false}))
 
     
             }
@@ -47,7 +53,7 @@ export default class Post extends Component {
 <View style={{marginBottom:10}}  >
 
                 <ProfileName name={"Mostafa Mahmoud"} time={"2hrs ago"} />
-        <Text style={{ margin: 7 }}>{item}</Text>
+        <Text style={{ margin: 7 }}>{item.tec}</Text>
 
                 <Image
                     style={{ marginTop: 7, width: '100%', flexShrink: 1 }}

@@ -13,6 +13,7 @@ import Spinner from '../common/Loading';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Rating, SearchBar } from 'react-native-elements';
 import Header from '../common/Header';
+import {API_LINK} from '../common/Constants';
 
 const { height, width } = Dimensions.get('window')
 
@@ -27,16 +28,30 @@ export default class Courses extends Component {
 
     async componentDidMount() {
         let { searchText } = this.state;
-        const items = await this.props.navigation.state.params.item;
-        const category = await this.props.navigation.state.params.category;
-        let data = items.result
-        this.setState({ spinner: false, data, searchText, category }, () => this.search(searchText))
-        console.log('componentDidMount data', data);
+        // const items = await this.props.navigation.state.params.item;
+        // const category = await this.props.navigation.state.params.category;
+        // let data = items.result
+        // this.setState({ spinner: false, data, searchText, category }, () => this.search(searchText))
+        // console.log('componentDidMount data', data);
+        let dataArr=[]
+        let courses=[]
+        await fetch(`${API_LINK}/courses`)
+        .then(res => res.json())
+        .then(async res => {
+          console.log('resresres', res);
+          if (res.success) {
+             courses = Object.values(res.data)
+            courses.forEach(data => {
+                dataArr.push(data)
+            }); 
+            await this.setState({data:dataArr ,spinner:false} ,() => this.search(searchText))
+          }
+  
+        })
 
     }
 
     renderCategory(item) {
-        console.log('item', item);
 
         return (
             <View
@@ -78,7 +93,6 @@ export default class Courses extends Component {
             searchResult = data;
         } else {
             data.forEach(element => {
-                console.log('element', element);
                 let title = element.title.toLowerCase();
                 let instructor = element.instructor.toLowerCase();
                 if (title.search(searchCourse) !== -1 || instructor.search(searchCourse) !== -1) {

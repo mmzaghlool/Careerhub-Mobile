@@ -99,7 +99,7 @@ export default class HomeScreen extends React.Component {
     return (
 
       <View style={[styles.container,Style.container]}>
-        <Header title='Chats' backButton />
+        <Header title='Chat-List' backButton onBackPress={() => this.props.navigation.goBack()} />
         <View style={{padding:20}}>
            <FlatList
               data={this.state.list}

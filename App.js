@@ -21,12 +21,12 @@ import ChatBot from './screens/chats/chatBot'
 
 import Chat from './screens/chats/chat'
 const AppNavigator = createStackNavigator({
+  FirstScreen: {
+    screen: FirstScreen
+  },
   ChatBot: {
     screen: ChatBot
   },
-        FirstScreen: {
-          screen: FirstScreen
-        },
   
   HomeScreen: {
     screen: HomeScreen

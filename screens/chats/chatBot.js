@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
 
             <View style={[{},styles.container, Style.container]}>
                 <View style={{flex:1}}>
-                <Header backButton title={'Chat-Bot'}/>
+                <Header backButton title={'Chat-Bot'} onBackPress={() => this.props.navigation.goBack()} />
                 {this.state.answer && 
                 <ScrollView style={{padding:20,}}>
                     <View style={{marginBottom:15,  alignItems: 'center', alignSelf: 'flex-end', backgroundColor:'#e6e6e6',padding:13,borderRadius:20,alignContent:'center'}}>

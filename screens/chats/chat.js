@@ -82,7 +82,7 @@ export default class HomeScreen extends React.Component {
         return (
 
             <View style={[styles.container,Style.container]}>
-                <Header  backButton/>
+                <Header  backButton onBackPress={() => this.props.navigation.goBack()} />
                 <FlatList
                     data={this.state.y}
                     keyExtractor={(item, index) => index.toString()}

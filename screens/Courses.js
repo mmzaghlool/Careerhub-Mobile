@@ -111,7 +111,7 @@ export default class Courses extends Component {
             return (
                 <View style={Style.container}>
                     <ScrollView>
-                        <Header backButton title={category} />
+                        <Header backButton title={category} onBackPress={() => this.props.navigation.goBack()} />
                         <View style={{ padding: 20 }}>
                             <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
                             <TextInput

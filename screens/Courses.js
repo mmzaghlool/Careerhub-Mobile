@@ -56,7 +56,7 @@ export default class Courses extends Component {
 
         return (
             <View
-                style={{
+                style={[{
                     marginBottom: 25,
                     backgroundColor: '#ffffff',
                     elevation: 5,
@@ -64,7 +64,7 @@ export default class Courses extends Component {
                     padding: 20,
                     marginHorizontal: 5,
                     marginTop: 15
-                }}>
+                },Style.elevation]}>
                 <Text style={{ fontWeight: 'bold', fontSize: 16, }}>{item.title}</Text>
                 <View style={{ flexDirection: 'row', }}>
                     <Rating

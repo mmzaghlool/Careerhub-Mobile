@@ -73,7 +73,7 @@ export default class Login extends Component {
           this.setState({
             loading: false,
           })
-          this.props.navigation.navigate('Drawer', { user })
+          this.props.navigation.navigate('HomeScreen', { user })
         } else {
           const message = res.message;
           alert(message)
@@ -183,7 +183,7 @@ export default class Login extends Component {
               </View>
 
               <Text style={styles.or}>
-                ───────── OR ─────────
+               ────── OR ──────
             </Text>
 
               <View style={styles.social}>

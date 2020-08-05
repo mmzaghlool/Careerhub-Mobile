@@ -44,7 +44,7 @@ export default class Group extends React.Component {
     renderItems = ({ item, index }) => (
 
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 50, marginTop: 30 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 50, marginTop: 30,marginBottom:10 }}>
  
             <Text style={{ flex: .5, fontSize: 19, fontWeight: 'bold', color: 'white', alignSelf: 'flex-start' }}>{item.level}</Text>
             <CheckBox
@@ -53,7 +53,7 @@ export default class Group extends React.Component {
 
 
                     this.checkThisBox(item.id);
-                    this.count()
+                    // this.count()
                 }}
                 isChecked={this.state.data[item.id].checked}
 
@@ -130,14 +130,14 @@ export default class Group extends React.Component {
                     </LinearGradient>
                 </TouchableOpacity>
 
-                <View style={{ flex: .35, borderTopRightRadius: 25, borderTopLeftRadius: 25,width:width }}>
+                <View style={{  borderTopRightRadius: 25, borderTopLeftRadius: 25,width:width }}>
                     <ScrollView>
                 <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           //colors={['#0e1f35', '#21455c']}
           
           style={styles.gradient2}>
-                    <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
+                    {/* <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
                         <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>Your Progress</Text>
                         <Text style={{ fontSize: 19, fontWeight: 'bold', color: 'white' }}>{this.state.j}%</Text>
                     </View>
@@ -145,7 +145,7 @@ export default class Group extends React.Component {
                         <Progress.Bar progress={
                          this.state.j / 100
                         } width={270} color={'#a9a0c5'} unfilledColor={'white'} height={15} borderRadius={10} />
-                    </View>
+                    </View> */}
                     {/* <Text style={{ flex:.5,fontSize: 19, fontWeight: 'bold', color: 'white' }}>LEVEL 1</Text>
                         <Text style={{ flex:.5,fontSize: 19, fontWeight: 'bold', color: 'white' }}>LEVEL 2</Text>
                         <Text style={{ flex:.5,fontSize: 19, fontWeight: 'bold', color: 'white' }}>LEVEL 3</Text> */}

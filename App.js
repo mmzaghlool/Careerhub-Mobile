@@ -24,10 +24,10 @@ const AppNavigator = createStackNavigator({
   FirstScreen: {
     screen: FirstScreen
   },
+
   ChatBot: {
     screen: ChatBot
   },
-  
   HomeScreen: {
     screen: HomeScreen
   },

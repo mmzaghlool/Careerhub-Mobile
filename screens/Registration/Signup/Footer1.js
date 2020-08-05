@@ -17,8 +17,7 @@ export default class Footer1 extends Component {
         return (
             <View>              
               <Text style={styles.or}>
-                ───────── OR ─────────
-              </Text>
+              ────── OR ──────              </Text>
 
                 <View style={styles.social}>
                     <View>

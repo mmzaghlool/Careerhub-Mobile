@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
             let x = [];
             const data = snap.val();
 
-
+            console.log('da',data);
 
             for (const key in data) {
                 const element = data[key];
@@ -62,15 +62,16 @@ export default class HomeScreen extends React.Component {
     renderItems = ({ item, index }) => (
 
 
-        <View style={{ alignItems: firebase.auth().currentUser.uid == item.senderUid ? 'flex-end' : 'flex-start' ,padding:10}}>
 
-            <Text style={{ marginTop: 8, fontSize: 17, fontWeight: 'bold', marginBottom: 20, marginLeft: 9 }}>{item.message}</Text>
+        <View style={{backgroundColor:firebase.auth().currentUser.uid == item.senderUid ?'#e6e6e6': '#b7a8f0', marginBottom:15, alignItems: firebase.auth().currentUser.uid == item.senderUid ? 'flex-end' : 'flex-start' , alignSelf: firebase.auth().currentUser.uid == item.senderUid ? 'flex-end' : 'flex-start', padding:17,borderRadius:20,alignContent:'center'}}>
+
+            <Text style={{ fontSize: 8, fontWeight: 'bold' }}>{item.name}</Text>
+            <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{item.message}</Text>
 
 
 
 
         </View>
-
     )
 
 
@@ -82,7 +83,7 @@ export default class HomeScreen extends React.Component {
         return (
 
             <View style={[styles.container,Style.container]}>
-                <Header  backButton onBackPress={() => this.props.navigation.goBack()} />
+                <Header  title={'Mosatafa'} backButton onBackPress={() => this.props.navigation.goBack()} />
                 <FlatList
                     data={this.state.y}
                     keyExtractor={(item, index) => index.toString()}

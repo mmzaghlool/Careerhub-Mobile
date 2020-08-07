@@ -13,23 +13,50 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { API_LINK, USER } from '../common/Constants';
 import Style from '../common/Style'
+import firebase from 'react-native-firebase';
 const { width } = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listData: [
+      pr: [
         { name: 'Machine Learning', progress: '0.75' },
         { name: 'Mobile Developing', progress: '0.5' },
-        { name: 'Web Developing', progress: '0.25' },
-        { name: 'Desktop Developing', progress: '0.75' },
+       
 
-      ]
+      ],
+      pro: [
+        {  progress: '0.75' },
+        {  progress: '0.5' },
+       
+
+      ],
+      
     }
   }
 
   async componentDidMount() {
+  await  fetch(`${API_LINK}/groups/${firebase.auth().currentUser.uid}`)
+                            .then(res => res.json())
+                            .then(async res => {
+                                console.log('hello', res.data);
+                                if (res.success) {
+                                  // this.setState({listData:res.data})
+                                  console.log('osososos',Object.values(res.data));
+                                  this.setState({listData:Object.values(res.data)})
+                                }
+
+                            })
+                            await  fetch(`${API_LINK}/rs/${firebase.auth().currentUser.uid}`)
+                            .then(res => res.json())
+                            .then(async res => {
+                                console.log('hello222', res.result);
+                                if (res.success) {
+                                  console.log(res);
+                                }
+
+                            })
     //let user = await AsyncStorage.getItem(USER);
     // const user = await this.props.navigation.state.params.user;
 
@@ -74,7 +101,7 @@ export default class HomeScreen extends React.Component {
             }}>
             <Progress
               showsText={true}
-              progress={item.progress}
+              progress={this.state.pro.progress}
               thickness={7}
               size={60}
               color="#ffffff"
@@ -82,7 +109,7 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
-          <Text style={styles.listIcons}>{item.name}</Text>
+          <Text style={styles.listIcons}>{item.genres}</Text>
         </LinearGradient>
         {/* </View> */}
       </TouchableOpacity>
@@ -127,7 +154,7 @@ export default class HomeScreen extends React.Component {
             }}>
             {this.renderFooterIcon('email', 'Messages', () => { this.props.navigation.navigate('ChatList', { user: this.state.totuser })})}
             {this.renderFooterIcon('account', 'Profile', () => { this.props.navigation.navigate('Profile', { user: this.state.totuser }) })}
-            {this.renderFooterIcon('bell-ring', 'Notifications', () => {this.props.navigation.navigate('Courses', { user: this.state.totuser }) })}
+            {this.renderFooterIcon('bell-ring', 'Courses', () => {this.props.navigation.navigate('Courses', { user: this.state.totuser }) })}
           </View>
         </View>
       </View>

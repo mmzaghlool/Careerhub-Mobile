@@ -18,13 +18,19 @@ import Courses from './screens/Courses';
 import Tracks from './screens/Tracks';
 import ChatList from './screens/chats/chatList'
 import ChatBot from './screens/chats/chatBot'
-
+import Submit from './screens/submit'
 import Chat from './screens/chats/chat'
+import RS from './screens/rs'
 const AppNavigator = createStackNavigator({
   FirstScreen: {
     screen: FirstScreen
   },
-
+  RS :{
+    screen:RS
+  },
+Submit :{
+  screen:Submit
+},
   ChatBot: {
     screen: ChatBot
   },

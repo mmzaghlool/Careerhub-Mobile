@@ -22,33 +22,26 @@ export default class Courses extends Component {
     constructor() {
         super()
         this.state = {
-            spinner: true,
-            searchText: '',
         }
     }
 
     async componentDidMount() {
         let { searchText } = this.state;
+        await  fetch(`${API_LINK}/rs/${firebase.auth().currentUser.uid}`)
+        .then(res => res.json())
+        .then(async res => {
+            console.log('hello222', res);
+            if (res.success) {
+                this.setState({searchResult:res.result})
+            }
+
+        })
         // const items = await this.props.navigation.state.params.item;
         // const category = await this.props.navigation.state.params.category;
         // let data = items.result
         // this.setState({ spinner: false, data, searchText, category }, () => this.search(searchText))
         // console.log('componentDidMount data', data);
-        let dataArr=[]
-        let courses=[]
-        await fetch(`${API_LINK}/courses`)
-        .then(res => res.json())
-        .then(async res => {
-          if (res.success) {
-             courses = Object.values(res.data)
-             console.log('cc',res);
-            courses.forEach(data => {
-                dataArr.push(data)
-            }); 
-            await this.setState({data:dataArr ,spinner:false} ,() => this.search(searchText))
-          }
-  
-        })
+       
 
     }
 
@@ -56,8 +49,6 @@ export default class Courses extends Component {
 
         return (
             <TouchableOpacity
-            onPress={ () =>             this.props.navigation.navigate('Submit',{item})
-        }
                 style={[{
                     marginBottom: 25,
                     backgroundColor: '#ffffff',
@@ -87,54 +78,16 @@ export default class Courses extends Component {
             </TouchableOpacity>
         );
     }
-    search(searchText) {
-        let { data } = this.state;
-        let searchResult = [];
-        // let searchID = /^[0-9]*$/;
-        let searchCourse = searchText.toLowerCase();
-        if (searchText === '') {
-            searchResult = data;
-        } else {
-            data.forEach(element => {
-                let title = element.title.toLowerCase();
-                let instructor = element.instructor.toLowerCase();
-                if (title.search(searchCourse) !== -1 || instructor.search(searchCourse) !== -1) {
-                    searchResult.push(element);
-                }
-            });
-        }
-        this.setState({ searchResult });
-    }
+   
     render() {
         const { spinner, searchResult, searchText, category } = this.state;
-        if (spinner) {
-            return <Spinner />
-        } else {
+       
             return (
                 <View style={Style.container}>
                     <ScrollView>
                         <Header backButton title={category} onBackPress={() => this.props.navigation.goBack()} />
                         <View style={{ padding: 20 }}>
                             <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
-                            <TextInput
-                                style={{
-                                    color: "#000",
-                                    height: 36,
-                                    lineHeight: 18,
-                                    borderRadius: 100,
-                                    backgroundColor: "#e5e4ea",
-                                    marginHorizontal: 12,
-                                    paddingHorizontal: 20,
-                                    textAlignVertical: "center",
-                                    elevation: 3
-                                }}
-                                value={searchText}
-                                placeholder={'Search...'}
-                                placeholderTextColor={"gray"}
-                                onChangeText={searchText => {
-                                    this.setState({ searchText }), this.search(searchText);
-                                }}
-                            />
                             <FlatList
                                 data={searchResult}
                                 extraData={this.state}
@@ -147,7 +100,7 @@ export default class Courses extends Component {
             );
         }
     };
-}
+
 
 const styles = StyleSheet.create({
     basicBackground: {

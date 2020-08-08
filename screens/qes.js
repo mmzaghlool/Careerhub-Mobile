@@ -6,7 +6,8 @@ import {
   AsyncStorage,
   Dimensions,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native';
 import TestButton from '../components/testbutton';
 import firebase from 'react-native-firebase';
@@ -163,6 +164,10 @@ export default class Qes extends React.Component {
                 .then(res => {
 
                   console.log('reg res', res);
+
+                  alert(`your track is ${res.result.track}`)
+                  // this.props.navigation.navigate('HomeScreen')
+                  this.props.navigation.navigate('FirstScreen')
 
                 })
                 .catch(err => {

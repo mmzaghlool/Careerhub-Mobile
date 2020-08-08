@@ -61,19 +61,25 @@ export default class Login extends Component {
   }
 
   async onLoginSuccess(res) {
-    console.log('res', res.user._user);
+    console.log('ok', res.user._user.uid);
     await fetch(`${API_LINK}/users/getUser/${res.user._user.uid}`)
-      .then(res => res.json())
+      .then(res => res.json()
+      )
       .then(async res => {
         console.log('resresres', res);
+        console.log(res.success);
         if (res.success) {
           const user = res.user;
+          console.log('sss',user);
+          console.log('suc',res.success);
           const userString = await JSON.stringify(user);
           await AsyncStorage.setItem(USER, userString)
+          console.log('befor',this.state.loading)
           this.setState({
             loading: false,
           })
-          this.props.navigation.navigate('HomeScreen', { user })
+          console.log('after',this.state.loading)
+          this.props.navigation.navigate('Drawer', { user })
         } else {
           const message = res.message;
           alert(message)

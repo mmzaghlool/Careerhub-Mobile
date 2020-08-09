@@ -57,13 +57,15 @@ export default class Post extends Component {
               disableVirtualization={true}
               renderItem={ (item) => 
             */}
-            <Image
+
+            {}
+            {/* <Image
                 style={{
                     alignSelf: 'center', width: 300,
                     height: 300,
                 }}
                 source={{ uri: this.state.image }}
-            />
+            /> */}
 
 
             {/* footer icons */}

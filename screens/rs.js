@@ -49,6 +49,7 @@ export default class Courses extends Component {
 
         return (
             <TouchableOpacity
+            onPress={ () => this.props.navigation.navigate('Submit',{item})}
                 style={[{
                     marginBottom: 25,
                     backgroundColor: '#ffffff',
@@ -71,7 +72,6 @@ export default class Courses extends Component {
                 <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>{item.instructor}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>Language: {item.language}</Text>
-                    <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>Duration: {item.runtime}</Text>
                 </View>
                 <Text style={{ fontSize: 14, color: '#000', marginHorizontal: 5, marginTop: 7, fontWeight: '700' }}>Overview:</Text>
                 <Text style={{ fontSize: 14, color: 'gray', marginHorizontal: 12 }}>{item.overview}</Text>

@@ -5,12 +5,11 @@
 // Video Tutorial: https://www.youtube.com/watch?v=ZzhOjO-1dCs
 
 import Qes from '../screens/qes'
-import FirstScreen from '../screens/FirstScreen';
 import Enter from '../screens/entertotest';
 import HomeScreen from '../screens/HomeScreen'
 import Profile from '../screens/Profile/Profile'
 import RS from '../screens/rs'
-
+import ChatBot from '../screens/chats/chatBot'
 import * as React from 'react';
 import { Text, View, Image, ScrollView, StyleSheet, Button, TouchableOpacity, Dimensions, Icon } from 'react-native';
 import {
@@ -106,22 +105,23 @@ const MyDrawerNavigator = createDrawerNavigator({
   {
     screen: RS,
     navigationOptions: {
-      title: 'Rec System',
+      title: 'Recommendation System',
       drawerIcon: <Image
         source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
   },
-  FirstScreen:
+  ChatBot:
   {
-    screen: FirstScreen,
+    screen: ChatBot,
     navigationOptions: {
-      title: 'Messenger',
+      title: 'Chat Bot',
       drawerIcon: <Image
         source={require('../assets/icons/cap.jpeg')}
         style={styles.icon} />
     },
   },
+  
   groups:
   {
     screen: Enter,
@@ -134,17 +134,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   },
 
   
-  logout:
-  {
-    screen: Enter,
-    navigationOptions: {
-      title: 'Log Out',
-      drawerIcon: <Image
-        source={require('../assets/icons/cap.jpeg')}
-        style={styles.icon} />
-    },
-
-  }
+ 
 
 
 },

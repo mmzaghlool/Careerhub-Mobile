@@ -8,10 +8,13 @@ import {
     Modal,
     Text,
     FlatList,
+    TextInput
 } from 'react-native';
 import Spinner from '../../common/Loading';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import {  API_LINK } from '../../common/Constants';
+import firebase from 'react-native-firebase';
 
 const { height, width } = Dimensions.get('window')
 
@@ -22,8 +25,11 @@ export default class Achievements extends Component {
             spinner: true,
             modal: false,
             selected: '',
-            selectSocial: ['Facebook', 'Twitter', 'Github', 'Behance', 'Instagram']
+            selectSocial: ['Facebook', 'Twitter', 'Github', 'Behance', 'Instagram'],
+            title: '',
+            description: '',
         };
+
     }
 
     async componentDidMount() {
@@ -55,75 +61,33 @@ export default class Achievements extends Component {
                     end={{ x: 0, y: 0 }}
                     colors={['#5653e2', '#795EE3', '#ae71f2']}
                     style={styles.modalView}>
-                    <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Select one of:
-                    </Text>
-                    {/* {send === 'ask' && <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Ask {firstName} a question
-                    </Text>}
-                    {send === 'report' && <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Why do you want to report {firstName} ?
-                    </Text>} */}
-                    {/* <TextInput
+                    <TextInput
                         multiline
-                        placeholder={send === 'ask' ? 'Write your question' : 'write your reasons'}
+                        placeholder="Title"
                         style={{
-                            backgroundColor: '#ffffff',
-                            width: width * 0.75,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            justifyContent: "center",
-                            borderRadius: 15,
+                            width: '90%',
+                            backgroundColor: 'white',
                             padding: 10,
-                        }}
-                    /> */}
-                    <View
-                        style={{
-                            backgroundColor: '#ffffff',
-                            // width: width * 0.75,
-                            // alignSelf: 'center',
-                            // alignItems: 'center',
-                            justifyContent: "center",
                             borderRadius: 15,
-                            // padding: 5,
+                            fontSize: 18,
+                            marginBottom:15,
                         }}
-                    >
-                        <FlatList
-                            data={selectSocial}
-                            keyExtractor={this._keyExtractor}
-                            extraData={this.state}
-                            renderItem={({ item }) => (
-                                <View>
-                                    <View style={{ flexDirection: 'row', marginLeft: width * 0.05, }}>
-                                        {/* <View>
-                                            {twitter}
-                                        </View> */}
-                                        <Text
-                                            style={{
-                                                marginLeft: width * 0.03,
-                                                fontSize: 18,
-                                                color: '#382d4b',
-                                                fontWeight: '600',
-                                                marginTop: height * 0.0125
-                                            }}
-                                        >
-                                            {item}
-                                        </Text>
-                                    </View>
-                                    <View style={{
-                                        height: height * 0.001,
-                                        width: '85%',
-                                        backgroundColor: 'gray',
-                                        marginLeft: width * 0.07,
-                                        marginTop: height * 0.01
-                                    }} />
-                                </View>
-                            )}
-                        />
-                    </View>
+                        value={this.state.title}
+                        onChangeText={(title) => this.setState({ title })}        
+                    />
+                    <TextInput
+                        multiline
+                        placeholder="Descreption"
+                        style={{
+                            width: '90%',
+                            backgroundColor: 'white',
+                            padding: 10,
+                            borderRadius: 15,
+                            fontSize: 18
+                        }}
+                        value={this.state.description}
+                        onChangeText={(description) => this.setState({ description })}        
+                    />
                     <View style={{ flexDirection: 'row', marginTop: height * 0.025, justifyContent: 'space-around' }}>
                         <TouchableOpacity
                             style={{
@@ -154,7 +118,34 @@ export default class Achievements extends Component {
                                 height: height * 0.045,
                                 elevation: 5,
                             }}
-                            onPress={() => { this.setState({ modal: false }) }}
+                            onPress={async() => { this.setState({ modal: false })
+                        
+                            await fetch(`${API_LINK}/users/addPreExperience`, {
+                                method: "POST",
+                                headers: {
+                                  'Content-Type': "application/json"
+                                },
+                                body: JSON.stringify({
+                                 uid:firebase.auth().currentUser.uid,
+                                 title:this.state.title,
+                                 link:'dfdfdfddf',
+                                 description:this.state.description
+
+                                })
+                              }).then(res => res.json())
+                                .then(res => {
+                        
+                                  console.log('reg res', res);
+                        
+                                })
+                                .catch(err => {
+                                  console.log('reg err', err);
+                        
+                                })
+                        
+                        
+                        
+                        }}
                         >
                             <Text
                                 style={{ color: '#000', fontSize: 19, fontWeight: 'bold', }}>
@@ -175,16 +166,18 @@ export default class Achievements extends Component {
             return (
                 <View style={styles.tabView}>
                     <StatusBar backgroundColor='#2c233d' barStyle="light-content" />
-                    {/* <View>
+                    <View>
                         <FlatList
-                            data={FlatListItems}
+                            data={this.state.FlatListItems}
                             extraData={this.state}
                             renderItem={({ item }) => (
                                 <View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.verticalLine}> | </Text>
+                                    <View style={{ flexDirection: 'column' }}>
                                         <Text style={styles.item}>
-                                            {item}
+                                           Title : {item.title}
+                                        </Text>
+                                        <Text style={styles.item}>
+                                          Descreption : {item.description}
                                         </Text>
                                     </View>
                                     <View style={{
@@ -197,7 +190,7 @@ export default class Achievements extends Component {
                                 </View>
                             )}
                         />
-                    </View> */}
+                    </View>
                     <TouchableOpacity
                         style={{
                             borderRadius: 10,

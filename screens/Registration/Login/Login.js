@@ -70,11 +70,8 @@ export default class Login extends Component {
         console.log(res.success);
         if (res.success) {
           const user = res.user;
-          console.log('sss',user);
-          console.log('suc',res.success);
           const userString = await JSON.stringify(user);
           await AsyncStorage.setItem(USER, userString)
-          console.log('befor',this.state.loading)
           this.setState({
             loading: false,
           })

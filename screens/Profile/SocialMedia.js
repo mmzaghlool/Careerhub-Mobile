@@ -15,6 +15,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ModalFilterPicker from 'react-native-modal-filter-picker'
 import LinearGradient from 'react-native-linear-gradient';
 import RadioForm from 'react-native-simple-radio-button';
+import firebase from 'react-native-firebase';
+import {  API_LINK } from '../../common/Constants';
+
 
 const { height, width } = Dimensions.get('window')
 
@@ -75,11 +78,23 @@ export default class SociaMedia extends Component {
     }
 
     async componentDidMount() {
+        // await fetch(`${API_LINK}/users/getUser/${res.user._user.uid}`)
+        // .then(res => res.json()
+        // )
+        // .then(async res => {
+        //   console.log('resresres', res);
+        //   console.log(res.success);
+        //   if (res.success) {
+        //     const user = res.user;
+        //     console.log('sss',user.SociaMedia);
+        //   }
+        // })
+
         const { social } = this.props;
         console.log('---------------------------social----------------------------');
         console.log('social', social);
         if (social) {
-            let FlatListItems = Object.values(social)
+            let FlatListItems = Object.keys(social)
             this.setState({ social, FlatListItems, spinner: false })
             console.log('FlatListItems', FlatListItems);
         } else {
@@ -151,10 +166,11 @@ export default class SociaMedia extends Component {
                             buttonColor={'#382d4b'}
                             selectedButtonColor={'#382d4b'}
                             labelStyle={{ fontSize: 19, marginLeft: width * 0.01, marginBottom: height * 0.01, color: '#382d4b' }}
-                            onPress={(selected) => {
+                            onPress={ async(selected) => {
                                 this.setState({ selected }),
                                     // marketingValue === 4 ? this.setState({ custom: true }) : this.setState({ custom: false })
                                     console.log(selected);
+                                   
                             }}
                         />
 
@@ -218,10 +234,31 @@ export default class SociaMedia extends Component {
                                 height: height * 0.045,
                                 elevation: 5,
                             }}
-                            onPress={() => {
+                            onPress={async() => {
                                 this.setState({ modal: false, selected })
                                 // console.log('selected', selected),
                                 { this.addedSocial() }
+                                await fetch(`${API_LINK}/users/addSocialMedia`, {
+                                    method: "POST",
+                                    headers: {
+                                      'Content-Type': "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                     uid:firebase.auth().currentUser.uid,
+                                     type:selected,
+                                     text:'dfdfdfddf'
+
+                                    })
+                                  }).then(res => res.json())
+                                    .then(res => {
+                            
+                                      console.log('reg res', res);
+                            
+                                    })
+                                    .catch(err => {
+                                      console.log('reg err', err);
+                            
+                                    })
                             }}
                         >
                             <Text

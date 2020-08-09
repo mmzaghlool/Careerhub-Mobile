@@ -80,7 +80,6 @@ export default class Courses extends Component {
                 <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>{item.instructor}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>Language: {item.language}</Text>
-                    <Text style={{ fontSize: 12, color: 'gray', marginTop: 5, marginHorizontal: 10 }}>Duration: {item.runtime}</Text>
                 </View>
                 <Text style={{ fontSize: 14, color: '#000', marginHorizontal: 5, marginTop: 7, fontWeight: '700' }}>Overview:</Text>
                 <Text style={{ fontSize: 14, color: 'gray', marginHorizontal: 12 }}>{item.overview}</Text>
@@ -96,12 +95,16 @@ export default class Courses extends Component {
             searchResult = data;
         } else {
             data.forEach(element => {
+                console.log('element title',element.title);
+                console.log('element instructor',element.instructor);
+                if(element){
                 let title = element.title.toLowerCase();
                 let instructor = element.instructor.toLowerCase();
                 if (title.search(searchCourse) !== -1 || instructor.search(searchCourse) !== -1) {
                     searchResult.push(element);
-                }
+                }}
             });
+
         }
         this.setState({ searchResult });
     }

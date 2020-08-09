@@ -50,10 +50,10 @@ export default class Profile extends Component {
       show: false,
       index: 0,
       routes: [
-        { key: 'first', title: 'Posts' },
-        { key: 'second', title: 'Skills' },
-        { key: 'third', title: 'Achievements' },
-        { key: 'fourth', title: 'Social Media' },
+        // { key: 'first', title: 'Posts' },
+        { key: 'first', title: 'Skills' },
+        { key: 'second', title: 'Achievements' },
+        { key: 'third', title: 'Social Media' },
       ],
       background: '#ffffff',
       color: '#ffffff',
@@ -71,12 +71,12 @@ export default class Profile extends Component {
     this.setState({ ...user, spinner: false })
   }
 
-  FirstRoute = () => {
-    // const {  } = this.state;
-    return <Posts />
-  }
+  // FirstRoute = () => {
+  //   // const {  } = this.state;
+  //   return <Posts />
+  // }
 
-  SecondRoute = () => {
+  FirstRoute = () => {
     const { skills, spinner } = this.state;
     console.log('------------------------profile-------------------------------');
     console.log('skills', skills);
@@ -85,12 +85,12 @@ export default class Profile extends Component {
     }
   }
 
-  ThirdRoute = () => {
-    const { achievement, spinner } = this.state;
-    return <Achievements />
+  SecondRoute = () => {
+    const { preExperience, spinner } = this.state;
+    return <Achievements achievement={preExperience}/>
   }
 
-  FourthRoute = () => {
+  ThirdRoute = () => {
     const { social, spinner } = this.state;
     if (!spinner) {
       return <SociaMedia social={social} />
@@ -287,7 +287,7 @@ export default class Profile extends Component {
                 first: this.FirstRoute,
                 second: this.SecondRoute,
                 third: this.ThirdRoute,
-                fourth: this.FourthRoute,
+                // fourth: this.FourthRoute,
               })}
               renderTabBar={props =>
                 <TabBar
@@ -404,6 +404,7 @@ const styles = StyleSheet.create({
     flex: 2,
     backgroundColor: '#ffffff',
     marginTop: height * 0.01,
+    height:height
   },
   modalView: {
     width: width * 0.85,
@@ -412,3 +413,4 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+

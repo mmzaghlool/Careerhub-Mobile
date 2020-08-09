@@ -44,7 +44,7 @@ export default class HomeScreen extends React.Component {
                     <View style={{marginBottom:15,  alignItems: 'center', alignSelf: 'flex-end', backgroundColor:'#e6e6e6',padding:13,borderRadius:20,alignContent:'center'}}>
                     <Text style={{  fontSize: 13, fontWeight: 'bold',textAlign:'right' }}>{this.state.question}?</Text>
                     </View>
-                    <View style={{alignItems: 'center', alignSelf: 'flex-start', backgroundColor:'#b7a8f0',padding:13,borderRadius:20 ,alignItems:'center'}}>
+                    <View style={{alignItems: 'center', alignSelf: 'flex-start', backgroundColor:'#b7a8f0',padding:13,borderRadius:20 ,alignItems:'center',marginBottom:100}}>
                     <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Answer: {this.state.answer}</Text>
                     <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Link: {this.state.shareLink}</Text>
                     <Text style={{  fontSize: 13, fontWeight: 'bold' }}>Vote: {this.state.vote}</Text>

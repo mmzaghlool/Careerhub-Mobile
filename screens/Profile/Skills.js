@@ -8,12 +8,14 @@ import {
     FlatList,
     TouchableOpacity,
     Modal,
+    TextInput
 } from 'react-native';
 import Spinner from '../../common/Loading';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import RadioForm from 'react-native-simple-radio-button';
-
+import {  API_LINK } from '../../common/Constants';
+import firebase from 'react-native-firebase';
 const { height, width } = Dimensions.get('window')
 
 export default class Skills extends Component {
@@ -63,86 +65,20 @@ export default class Skills extends Component {
                     end={{ x: 0, y: 0 }}
                     colors={['#5653e2', '#795EE3', '#ae71f2']}
                     style={styles.modalView}>
-                    <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Select one of:
-                    </Text>
-                    {/* {send === 'ask' && <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Ask {firstName} a question
-                    </Text>}
-                    {send === 'report' && <Text
-                        style={{ alignSelf: 'center', color: '#ffffff', fontSize: 23, fontWeight: 'bold', marginBottom: height * 0.02 }}>
-                        Why do you want to report {firstName} ?
-                    </Text>} */}
-                    {/* <TextInput
+                     <TextInput
                         multiline
-                        placeholder={send === 'ask' ? 'Write your question' : 'write your reasons'}
+                        placeholder="Title"
                         style={{
-                            backgroundColor: '#ffffff',
-                            width: width * 0.75,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            justifyContent: "center",
-                            borderRadius: 15,
+                            width: '90%',
+                            backgroundColor: 'white',
                             padding: 10,
-                        }}
-                    /> */}
-                    <View
-                        style={{
-                            backgroundColor: '#ffffff',
-                            // width: width * 0.75,
-                            // alignSelf: 'center',
-                            // alignItems: 'center',
-                            justifyContent: "center",
                             borderRadius: 15,
-                            padding: 15,
+                            fontSize: 18,
+                            marginBottom:15,
                         }}
-                    >
-                        <RadioForm
-                            radio_props={addSkill}
-                            initial={0}
-                            buttonSize={10}
-                            buttonColor={'#382d4b'}
-                            selectedButtonColor={'#382d4b'}
-                            labelStyle={{ fontSize: 19, marginLeft: width * 0.01, marginBottom: height * 0.01, color: '#382d4b' }}
-                            onPress={(selected) => {
-                                this.setState({ selected }),
-                                    // marketingValue === 4 ? this.setState({ custom: true }) : this.setState({ custom: false })
-                                    console.log(selected);
-                            }}
-                        />
-
-                        {/* <FlatList
-                            data={selectSocial}
-                            keyExtractor={this._keyExtractor}
-                            extraData={this.state}
-                            renderItem={({ item }) => (
-                                <View>
-                                    <View style={{ flexDirection: 'row', marginLeft: width * 0.05, }}>
-                                        <Text
-                                            style={{
-                                                marginLeft: width * 0.03,
-                                                fontSize: 18,
-                                                color: '#382d4b',
-                                                fontWeight: '600',
-                                                marginTop: height * 0.0125
-                                            }}
-                                        >
-                                            {item}
-                                        </Text>
-                                    </View>
-                                    <View style={{
-                                        height: height * 0.001,
-                                        width: '85%',
-                                        backgroundColor: 'gray',
-                                        marginLeft: width * 0.07,
-                                        marginTop: height * 0.01
-                                    }} />
-                                </View>
-                            )}
-                        /> */}
-                    </View>
+                        value={this.state.skill}
+                        onChangeText={(skill) => this.setState({ skill })}        
+                    />
                     <View style={{ flexDirection: 'row', marginTop: height * 0.025, justifyContent: 'space-around' }}>
                         <TouchableOpacity
                             style={{
@@ -173,10 +109,32 @@ export default class Skills extends Component {
                                 height: height * 0.045,
                                 elevation: 5,
                             }}
-                            onPress={() => {
+                            onPress={async() => {
                                 this.setState({ modal: false, selected })
                                 // console.log('selected', selected),
                                 { this.addedSkill() }
+
+
+                            await fetch(`${API_LINK}/users/addSkill`, {
+                                method: "POST",
+                                headers: {
+                                  'Content-Type': "application/json"
+                                },
+                                body: JSON.stringify({
+                                 uid:firebase.auth().currentUser.uid,
+                                skill:this.state.skill
+
+                                })
+                              }).then(res => res.json())
+                                .then(res => {
+                        
+                                  console.log('reg res', res);
+                        
+                                })
+                                .catch(err => {
+                                  console.log('reg err', err);
+                        
+                                })
                             }}
                         >
                             <Text
@@ -221,7 +179,6 @@ export default class Skills extends Component {
                             renderItem={({ item }) => (
                                 <View>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.verticalLine}> | </Text>
                                         <Text style={styles.item}>
                                             {item}
                                         </Text>

@@ -94,7 +94,9 @@ export default class Group extends React.Component {
         return (
             <View style={[{ flex: 1, alignItems: 'center', marginTop: 30, justifyContent: 'space-between' },Style.container]}>
                  
-                <TouchableOpacity style={{ flex: .18, }}>
+                <TouchableOpacity style={{ flex: .18, }} onPress={ () =>{
+                        this.props.navigation.navigate('ChatList')
+                }}>
                 <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           //colors={['#0e1f35', '#21455c']}
@@ -120,7 +122,7 @@ export default class Group extends React.Component {
                     </LinearGradient>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={ () => this.props.navigation.goBack()} style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
+                <TouchableOpacity  style={{ justifyContent: 'space-around', flexDirection: 'row', flex: .18, backgroundColor: '#4e446f', width: width * .8, borderRadius: 30, alignItems: 'center' }}>
                 <LinearGradient
           colors={['#9D76F3', '#7264ED', '#7466Ef']}
           //colors={['#0e1f35', '#21455c']}

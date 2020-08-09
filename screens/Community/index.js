@@ -35,7 +35,7 @@ export default class Community extends Component {
         const { modal } = this.state
         return (
             <View style={[{ backgroundColor: '#795EE3' }, Style.container]}>
-                <Header backButton title="Community" />
+                <Header backButton title="Community" onBackPress={() => this.props.navigation.goBack()} />
 
                 {/* Define Modal */}
                 <Modal animated animationType='slide' visible={modal !== false} transparent >
